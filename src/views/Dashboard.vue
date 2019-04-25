@@ -1,9 +1,12 @@
 <template>
-  <h1>this is the home page</h1>
+  <h1>dashboard page</h1>
 </template>
 
 <script>
 export default {
-  name: "Home"
+  name: Dashboard
 };
 </script>
+
+<style>
+</style>
