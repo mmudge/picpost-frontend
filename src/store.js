@@ -74,6 +74,24 @@ export default new Vuex.Store({
           commit("setIsAuthenticated", false);
           router.push('/');
       });
+    },
+    userSignOut({ commit }) {
+      return fetch("http://localhost:3000/logout", {
+        method: "DELETE",
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "JWT"
+          // "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: JSON.stringify(this.state.user)
+      })
+      .then((response) => {
+        commit("setUser", null);
+        commit("setIsAuthenticated", false);
+        router.push('/');
+      })
     }
   },
   getters: {
