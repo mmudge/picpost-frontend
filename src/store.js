@@ -21,20 +21,13 @@ export default new Vuex.Store({
   actions: {
     userJoin({ commit }, { email, password, password_confirmation }) {
       return fetch("http://localhost:3000/signup", {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        // credentials: 'include',
-        // mode: "cors", // no-cors, cors, *same-origin
-        // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
+        method: "POST",
+        credentials: "same-origin",
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json",
           "Authorization": "JWT"
-          // "Content-Type": "application/x-www-form-urlencoded",
         },
-        // redirect: "follow", // manual, *follow, error
-        // referrer: "no-referrer", // no-referrer, *client
-        // body: JSON.stringify(data), // body data type must match "Content-Type" header
         body: JSON.stringify( {
           user: {
             email: email,
@@ -43,10 +36,15 @@ export default new Vuex.Store({
           }
         })
       })
-        .then((response) => {
-          response.json();
-          // console.log(response)
-        });
+      .then((response) => {
+        response.json();
+        router.push('/login');
+      })
+      .catch(() => {
+        commit('setUser', null);
+        commit("setIsAuthenticated", false);
+        router.push('/');
+      });
     },
     userLogin({ commit }, { email, password }) {
       const u = { user: { email: email, password: password }}
@@ -65,17 +63,22 @@ export default new Vuex.Store({
         return response.json();
       })
       .then((response) => {
-
-        console.log(response);
         if (response.token) {
-          commit('setUser', { user: { email: response.email, token: response.token }});
-          commit('setIsAuthenticated', true);
-          router.push("dashboard");
+          commit("setUser", response);
+          commit("setIsAuthenticated", true);
+          router.push("/dashboard");
         }
       })
-      .catch((error) => {
-        console.log('login didnt work', error)
-      })
+      .catch(() => {
+          commit("setUser", null);
+          commit("setIsAuthenticated", false);
+          router.push('/');
+      });
+    }
+  },
+  getters: {
+    isAuthenticated(state) {
+      return state.user !== null && state.user !== undefined;
     }
   }
 });
