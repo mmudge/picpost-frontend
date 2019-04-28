@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     appName: 'Pic Post',
     user: null,
-    isAuthenticated: false
+    isAuthenticated: false,
+    messages: []
   },
   mutations: {
     setUser(state, payload) {
@@ -16,9 +17,30 @@ export default new Vuex.Store({
     },
     setIsAuthenticated(state, payload) {
       state.isAuthenticated = payload;
+    },
+    setMessages(state, payload) {
+      state.messages.push(payload);
     }
   },
   actions: {
+    loadMessages({commit}) {
+      return fetch(`http://localhost:3000/users/${this.state.user.id}/messages`, {
+        method: 'GET',
+        headers: {
+          "Accept": "application/json",
+          "Authorization": `Bearer ${this.state.user.token}`
+        }
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        commit('setMessages', response)
+      })
+      .catch((error) => {
+        console.log('load message didnt work', error);
+      })
+    },
     userJoin({ commit }, { email, password, password_confirmation }) {
       return fetch("http://localhost:3000/signup", {
         method: "POST",
@@ -97,6 +119,9 @@ export default new Vuex.Store({
   getters: {
     isAuthenticated(state) {
       return state.user !== null && state.user !== undefined;
+    },
+    currentUser(state) {
+      return state.user;
     }
   }
 });
