@@ -30,6 +30,13 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <label for="user-select">Choose a user to send a message:</label>
+    <select id="user-select">
+      <option value>--Select--</option>
+      <template v-for="u in users">
+        <option :key="u.email" value="`${u.id}`">{{ u.email }}</option>
+      </template>
+    </select>
   </v-container>
 </template>
 
@@ -38,22 +45,20 @@ export default {
   name: "Mailbox",
   data() {
     return {
-      messages: []
+      messages: [],
+      users: []
     };
   },
   methods: {},
   mounted() {
     console.log("store", this.$store.state.user);
-    return fetch(
-      `http://localhost:3000/users/${this.$store.state.user.id}/messages`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.$store.state.user.token}`
-        }
+    fetch(`http://localhost:3000/users/${this.$store.state.user.id}/messages`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.$store.state.user.token}`
       }
-    )
+    })
       .then(response => {
         return response.json();
       })
@@ -62,6 +67,21 @@ export default {
       })
       .catch(error => {
         console.log("load message didnt work", error);
+      });
+    fetch(`http://localhost:3000/users`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json"
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        return (this.users = response);
+      })
+      .catch(error => {
+        console.log("load users didnt work", error);
       });
   }
 };
