@@ -30,26 +30,60 @@
         </v-card>
       </v-flex>
     </v-layout>
-    <label for="user-select">Choose a user to send a message:</label>
-    <select id="user-select">
-      <option value>--Select--</option>
-      <template v-for="u in users">
-        <option :key="u.email" value="`${u.id}`">{{ u.email }}</option>
-      </template>
-    </select>
+    <NewMessage v-on:add-message="addMessage" :users="users"/>
   </v-container>
 </template>
 
 <script>
+import NewMessage from "../components/NewMessage.vue";
 export default {
   name: "Mailbox",
+  components: {
+    NewMessage
+  },
   data() {
     return {
       messages: [],
       users: []
     };
   },
-  methods: {},
+  methods: {
+    addMessage(newMessage) {
+      console.log(JSON.stringify(newMessage));
+      const m = {
+        message: {
+          subject: "aaaa",
+          body: "aaaaa",
+          user_id: this.$store.state.user.id
+        }
+      };
+
+      return fetch(
+        `http://localhost:3000/users/${this.$store.state.user.id}/messages`,
+        {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${this.$store.state.user.token}`
+          },
+          body: JSON.stringify(m)
+        }
+      )
+        .then(response => {
+          response.json();
+          console.log("first response?", response);
+        })
+        .then(response => {
+          console.log("did post work?", response);
+          // this.messages.push(response);
+        })
+        .catch(error => {
+          console.log("post message didnt work", error);
+        });
+    }
+  },
   mounted() {
     console.log("store", this.$store.state.user);
     fetch(`http://localhost:3000/users/${this.$store.state.user.id}/messages`, {

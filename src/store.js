@@ -24,22 +24,7 @@ export default new Vuex.Store({
   },
   actions: {
     loadMessages({commit}) {
-      return fetch(`http://localhost:3000/users/${this.state.user.id}/messages`, {
-        method: 'GET',
-        headers: {
-          "Accept": "application/json",
-          "Authorization": `Bearer ${this.state.user.token}`
-        }
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        commit('setMessages', response)
-      })
-      .catch((error) => {
-        console.log('load message didnt work', error);
-      })
+
     },
     userJoin({ commit }, { email, password, password_confirmation }) {
       return fetch("http://localhost:3000/signup", {
@@ -122,7 +107,8 @@ export default new Vuex.Store({
     },
     currentUser(state) {
       return state.user;
-    }
+    },
+
   }
 });
 
