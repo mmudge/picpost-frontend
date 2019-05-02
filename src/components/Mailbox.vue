@@ -1,54 +1,81 @@
 <template>
   <v-container>
     <v-layout row>
-      <v-flex xs12 sm6 offset-sm3>
+      <v-flex xs12>
         <v-card>
           <v-toolbar color="primary" dark>
             <v-toolbar-title>Mailbox</v-toolbar-title>
-
             <v-spacer></v-spacer>
 
-            <v-btn icon>
-              <v-icon>mail</v-icon>
-            </v-btn>
+            <v-dialog v-model="dialogNewMessage" width="500" pa-5>
+              <template v-slot:activator="{ on }">
+                <v-btn color="success" dark v-on="on">
+                  New message
+                  <v-icon>mail</v-icon>
+                </v-btn>
+              </template>
+              <v-card>
+                <NewMessage
+                  v-on:add-message="addMessage"
+                  :users="users"
+                  v-on:closeDialog="dialogOff"
+                />
+              </v-card>
+            </v-dialog>
           </v-toolbar>
 
-          <v-list three-line>
-            <template>
-              <v-subheader>Messages</v-subheader>
+          <v-list three-line v-for="message in messages" :key="message.id">
+            <v-dialog v-model="dialogMessageShow" width="500" pa-5>
+              <!-- <template v-slot:activator="{ on }">
+                <v-btn color="success" dark v-on="on">view message</v-btn>
+              </template>-->
+              <v-card>
+                <MessageShow :messageId="message.id"/>
+              </v-card>
+            </v-dialog>
+            <v-list-tile @click="dialogMessageShow = !dialogMessageShow">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ message.subject }}</v-list-tile-title>
+                <v-list-tile-sub-title class="text--primary">{{ message.created_at }}</v-list-tile-sub-title>
 
-              <v-divider></v-divider>
+                <v-list-tile-sub-title>{{ message.body }}</v-list-tile-sub-title>
+              </v-list-tile-content>
 
-              <v-list-tile v-for="message in messages" :key="message.subject">
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ message.subject }}</v-list-tile-title>
-                  <v-list-tile-sub-title>{{ message.body }}</v-list-tile-sub-title>
-                  <v-btn @click="deleteMessage(message.id)">delete message</v-btn>
-                </v-list-tile-content>
-              </v-list-tile>
-            </template>
+              <v-spacer></v-spacer>
+
+              <v-btn icon @click="deleteMessage(message.id)">
+                <v-icon>delete</v-icon>
+              </v-btn>
+            </v-list-tile>
           </v-list>
         </v-card>
       </v-flex>
     </v-layout>
-    <NewMessage v-on:add-message="addMessage" :users="users"/>
   </v-container>
 </template>
 
 <script>
 import NewMessage from "../components/NewMessage.vue";
+import MessageShow from "../components/MessageShow.vue";
+
 export default {
   name: "Mailbox",
   components: {
-    NewMessage
+    NewMessage,
+    MessageShow
   },
   data() {
     return {
       messages: [],
-      users: []
+      users: [],
+      dialogNewMessage: false,
+      dialogMessageShow: false
     };
   },
   methods: {
+    dialogOff() {
+      this.dialog = false;
+    },
     addMessage(newMessage) {
       console.log(JSON.stringify(newMessage));
       const m = {
@@ -77,6 +104,7 @@ export default {
         })
         .then(response => {
           console.log(response);
+          this.dialogNewMessage = false;
           return this.messages.push(response);
 
           // this.messages.push(response);
