@@ -23,6 +23,7 @@
                 <v-list-tile-content>
                   <v-list-tile-title>{{ message.subject }}</v-list-tile-title>
                   <v-list-tile-sub-title>{{ message.body }}</v-list-tile-sub-title>
+                  <v-btn @click="deleteMessage(message.id)">delete message</v-btn>
                 </v-list-tile-content>
               </v-list-tile>
             </template>
@@ -104,6 +105,22 @@ export default {
         .catch(error => {
           console.log("load message didnt work", error);
         });
+    },
+    deleteMessage(messageId) {
+      fetch(
+        `http://localhost:3000/users/${
+          this.$store.state.user.id
+        }/messages/${messageId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${this.$store.state.user.token}`
+          }
+          // body: JSON.stringify({ id: messageId })
+        }
+      ).then(this.checkMessages());
     },
     loadUsers() {
       fetch(`http://localhost:3000/users`, {
