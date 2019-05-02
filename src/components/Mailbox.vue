@@ -52,8 +52,8 @@ export default {
       console.log(JSON.stringify(newMessage));
       const m = {
         message: {
-          subject: "aaaa",
-          body: "aaaaa",
+          subject: newMessage.subject,
+          body: newMessage.body,
           user_id: this.$store.state.user.id
         }
       };
@@ -72,51 +72,59 @@ export default {
         }
       )
         .then(response => {
-          response.json();
-          console.log("first response?", response);
+          return response.json();
         })
         .then(response => {
-          console.log("did post work?", response);
+          return console.log(response);
+
           // this.messages.push(response);
         })
         .catch(error => {
           console.log("post message didnt work", error);
         });
+    },
+    checkMessages() {
+      fetch(
+        `http://localhost:3000/users/${this.$store.state.user.id}/messages`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${this.$store.state.user.token}`
+          }
+        }
+      )
+        .then(response => {
+          return response.json();
+        })
+        .then(response => {
+          return (this.messages = response);
+        })
+        .catch(error => {
+          console.log("load message didnt work", error);
+        });
+    },
+    loadUsers() {
+      fetch(`http://localhost:3000/users`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json"
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(response => {
+          return (this.users = response);
+        })
+        .catch(error => {
+          console.log("load users didnt work", error);
+        });
     }
   },
   mounted() {
-    console.log("store", this.$store.state.user);
-    fetch(`http://localhost:3000/users/${this.$store.state.user.id}/messages`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.$store.state.user.token}`
-      }
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(response => {
-        return (this.messages = response);
-      })
-      .catch(error => {
-        console.log("load message didnt work", error);
-      });
-    fetch(`http://localhost:3000/users`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json"
-      }
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(response => {
-        return (this.users = response);
-      })
-      .catch(error => {
-        console.log("load users didnt work", error);
-      });
+    this.checkMessages();
+    this.loadUsers();
   }
 };
 </script>
