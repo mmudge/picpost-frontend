@@ -75,7 +75,8 @@ export default {
           return response.json();
         })
         .then(response => {
-          return console.log(response);
+          console.log(response);
+          return this.messages.push(response);
 
           // this.messages.push(response);
         })
