@@ -1,12 +1,15 @@
 <template>
   <div>
-    <h1>Welccome to your profile dashboard {{ getUser.email }}</h1>
-    <Mailbox/>
+    <h1>Welcome to your profile dashboard {{ getUser.email }}</h1>
+    <v-btn class="dropzone">upload profile pic</v-btn>
+    <v-btn color="success" dark to="/messages">Check your mailbox</v-btn>
+    <form class="dropzone">drop pic here</form>
   </div>
 </template>
 
 <script>
 import Mailbox from "../components/Mailbox.vue";
+import Dropzone from "dropzone";
 
 export default {
   name: "Dashboard",

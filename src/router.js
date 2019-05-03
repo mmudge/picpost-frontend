@@ -30,6 +30,15 @@ const router = new Router({
       }
     },
     {
+      path: "/messages",
+      name: "messages",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/Messages.vue"),
+      meta: {
+        authRequired: true
+      }
+    },
+    {
       path: "/login",
       name: "login",
       component: () =>

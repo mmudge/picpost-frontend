@@ -10,7 +10,7 @@
     <v-toolbar app color="primary" dark>
       <v-toolbar-side-icon class="hidden-md-and-up" @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-spacer class="hidden-md-and-up"></v-spacer>
-      <v-btn flat dark>
+      <v-btn flat dark to="/">
         <v-toolbar-title>
           {{ appName }}
           <v-icon>chat_bubble_outline</v-icon>

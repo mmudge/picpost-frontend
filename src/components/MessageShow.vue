@@ -1,11 +1,15 @@
 <template>
   <v-container>
-    <v-layout>
+    <v-layout row>
       <v-flex>
-        <v-card>this is the message show page id = {{messageId }}</v-card>
-        <v-card>
-          {{ message.subject }}
-          {{ message.body }}
+        <v-card offset-sm-3 sm6>
+          <v-toolbar color="primary" dark>
+            <v-toolbar-title>Message show</v-toolbar-title>
+            <v-spacer></v-spacer>
+            {{ message.created_at }}
+          </v-toolbar>
+          <v-card-text>{{ message.subject }}</v-card-text>
+          <v-card-text class="body-text">{{ message.body }}</v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
@@ -54,5 +58,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.body-text {
+  padding: 50px;
+}
 </style>

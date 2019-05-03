@@ -1,5 +1,8 @@
 <template>
-  <h1>this is the home page</h1>
+  <div>
+    <h1>this is the home page</h1>
+    <p>you should log in homie :p</p>
+  </div>
 </template>
 
 <script>

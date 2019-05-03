@@ -33,9 +33,14 @@
                 <MessageShow :messageId="message.id"/>
               </v-card>
             </v-dialog>
-            <v-list-tile @click="dialogMessageShow = !dialogMessageShow">
-              <v-list-tile-content>
-                <v-list-tile-title>{{ message.subject }}</v-list-tile-title>
+            <v-list-tile>
+              <v-list-tile-content
+                style="cursor: pointer;"
+                @click="dialogMessageShow = !dialogMessageShow"
+              >
+                <v-list-tile-title>
+                  <strong>{{ message.subject }}</strong>
+                </v-list-tile-title>
                 <v-list-tile-sub-title class="text--primary">{{ message.created_at }}</v-list-tile-sub-title>
 
                 <v-list-tile-sub-title>{{ message.body }}</v-list-tile-sub-title>
