@@ -111,8 +111,6 @@ export default {
           console.log(response);
           this.dialogNewMessage = false;
           return this.messages.push(response);
-
-          // this.messages.push(response);
         })
         .catch(error => {
           console.log("post message didnt work", error);

@@ -4,11 +4,10 @@
       <v-layout>
         <v-flex>
           <v-form ref="form" lazy-validation>
-            <v-text-field v-model="subject" label="Subject" required></v-text-field>
+            <v-text-field v-model="title" label="Post Title" required></v-text-field>
+            <!-- need to add image uploader -->
 
-            <v-text-field v-model="body" label="Message Body" required></v-text-field>
-
-            <v-btn color="success" @click="createMessage">add message</v-btn>
+            <v-btn color="success" @click="createPost">add post</v-btn>
 
             <v-btn color="error" @click="reset">Reset Form</v-btn>
           </v-form>
@@ -20,30 +19,25 @@
 
 <script>
 export default {
-  name: "NewMessage",
-  props: ["users"],
+  name: "NewPost",
   data() {
     return {
-      subject: "",
-      body: "",
+      title: "",
       user_id: null
     };
   },
   methods: {
-    createMessage() {
-      const newMessage = {
-        subject: this.subject,
-        body: this.body,
+    createPost() {
+      const newPost = {
+        title: this.title,
         user_id: this.$store.state.user.id
       };
-      this.$emit("add-message", newMessage);
+      this.$emit("add-post", newPost);
       this.$emit("closeDialog", false);
       this.reset();
     },
     reset() {
-      this.subject = "";
-      this.body = "";
-      this.user_id = null;
+      this.title = "";
     }
   }
 };
