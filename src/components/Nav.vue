@@ -19,10 +19,12 @@
 
       <v-spacer class="hidden-sm-and-down"></v-spacer>
       <v-toolbar-items v-if="!isAuthenticated" class="hidden-sm-and-down">
+        <v-btn flat to="/posts">Posts</v-btn>
         <v-btn to="/login" flat class="hidden-sm-and-down">Login</v-btn>
         <v-btn to="/join" flat class="hidden-sm-and-down">Sign Up</v-btn>
       </v-toolbar-items>
       <v-toolbar-items v-else>
+        <v-btn flat to="/posts">Posts</v-btn>
         <v-btn flat to="/dashboard">Dashboard</v-btn>
         <v-btn flat @click="logout">Logout</v-btn>
       </v-toolbar-items>
