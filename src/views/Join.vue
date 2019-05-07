@@ -17,6 +17,14 @@
                 required
               ></v-text-field>
               <v-text-field
+                prepend-icon="person"
+                name="username"
+                label="Username"
+                type="username"
+                v-model="username"
+                required
+              ></v-text-field>
+              <v-text-field
                 prepend-icon="lock"
                 name="password"
                 label="Password"
@@ -53,13 +61,15 @@ export default {
     return {
       email: "",
       password: "",
-      password_confirmation: ""
+      password_confirmation: "",
+      username: ""
     };
   },
   methods: {
     submit() {
       this.$store.dispatch("userJoin", {
         email: this.email,
+        username: this.username,
         password: this.password,
         password_confirmation: this.password_confirmation
       });

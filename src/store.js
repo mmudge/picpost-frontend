@@ -26,7 +26,7 @@ export default new Vuex.Store({
     loadMessages({commit}) {
 
     },
-    userJoin({ commit }, { email, password, password_confirmation }) {
+    userJoin({ commit }, { email, username, password, password_confirmation }) {
       return fetch("http://localhost:3000/signup", {
         method: "POST",
         credentials: "same-origin",
@@ -38,6 +38,7 @@ export default new Vuex.Store({
         body: JSON.stringify( {
           user: {
             email: email,
+            username: username,
             password: password,
             password_confirmation: password_confirmation
           }
@@ -70,9 +71,11 @@ export default new Vuex.Store({
         return response.json();
       })
       .then((response) => {
+        console.log(response.username)
         if (response.token) {
           commit("setUser", response);
           commit("setIsAuthenticated", true);
+          console.log('current user is', response)
           router.push("/dashboard");
         }
       })
@@ -90,7 +93,6 @@ export default new Vuex.Store({
           "Accept": "application/json",
           "Content-Type": "application/json",
           "Authorization": "JWT"
-          // "Content-Type": "application/x-www-form-urlencoded",
         },
         body: JSON.stringify(this.state.user)
       })
