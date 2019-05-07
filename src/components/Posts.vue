@@ -1,25 +1,35 @@
 <template>
-  <div>
-    <v-container>
-      <v-toolbar>
-        <v-toolbar-title dark>All Posts</v-toolbar-title>
-      </v-toolbar>
-      <v-dialog v-model="dialogNewPost" width="500" pa-5>
-        <template v-slot:activator="{ on }">
-          <v-btn color="success" dark v-on="on">New Post</v-btn>
-        </template>
+  <v-container fluid>
+    <v-dialog v-model="dialogNewPost" width="500" pa-5>
+      <template v-slot:activator="{ on }">
+        <v-btn color="success" dark v-on="on">New Post</v-btn>
+      </template>
+      <v-card>
+        <NewPost v-on:add-post="addPost" :users="users" v-on:closeDialog="dialogOff"/>
+      </v-card>
+    </v-dialog>
+    <v-layout row wrap justify-center>
+      <v-flex xs12 sm3 ma-1 v-for="post in posts" :key="post.id">
         <v-card>
-          <NewPost v-on:add-post="addPost" :users="users" v-on:closeDialog="dialogOff"/>
+          <v-img :src="image_src" aspect-ratio="2.75"></v-img>
+
+          <v-card-title primary-title>
+            <div>
+              <h3 class="headline mb-0">{{ post.title }}</h3>
+              <div>user id {{ post.user_id }}</div>
+            </div>
+          </v-card-title>
+
+          <v-card-actions>
+            <v-btn flat color="orange">Share</v-btn>
+            <v-btn flat color="orange">Like</v-btn>
+          </v-card-actions>
         </v-card>
-      </v-dialog>
-      <v-layout v-for="post in posts" :key="post.id">
-        <v-card>
-          <h1>{{ post.title }}</h1>
-        </v-card>
-      </v-layout>
-    </v-container>
-  </div>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
+
 
 <script>
 import NewPost from "../components/NewPost.vue";
@@ -33,7 +43,8 @@ export default {
       posts: [],
       users: [],
       dialogNewPost: false,
-      dialog: false
+      dialog: false,
+      image_src: require("../assets/card-bg.png")
     };
   },
   methods: {
