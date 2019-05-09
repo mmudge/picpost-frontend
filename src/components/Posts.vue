@@ -17,6 +17,7 @@
             <div>
               <h3 class="headline mb-0">{{ post.title }}</h3>
               <div>user id {{ post.user_id }}</div>
+              <div>posted by {{ findPostUser(post.user_id) }}</div>
             </div>
           </v-card-title>
 
@@ -110,6 +111,9 @@ export default {
     },
     dialogOff() {
       this.dialog = false;
+    },
+    findPostUser(id) {
+      return this.users.filter(u => u.id === id)[0].username;
     }
   },
   mounted() {

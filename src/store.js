@@ -73,6 +73,9 @@ export default new Vuex.Store({
       .then((response) => {
         console.log(response.username)
         if (response.token) {
+          // const token = response.token
+          // localStorage.setItem('token', token);
+          // console.log(localStorage)
           commit("setUser", response);
           commit("setIsAuthenticated", true);
           console.log('current user is', response)

@@ -4,6 +4,7 @@
     <h2>... or do you prefered to be called {{ getUser.username }} ??</h2>
 
     <v-btn color="success" dark to="/messages">Check your mailbox</v-btn>
+    <v-btn color="warning" dark to="/posts">check yo posts</v-btn>
   </div>
 </template>
 
