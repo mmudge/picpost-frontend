@@ -22,8 +22,8 @@
           </v-card-title>
 
           <v-card-actions>
-            <v-btn flat color="orange">Share</v-btn>
-            <v-btn flat color="orange">Like</v-btn>
+            <v-btn flat color="orange">Share with friends</v-btn>
+            <v-btn flat color="orange">Heart</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
