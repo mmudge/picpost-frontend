@@ -125,24 +125,3 @@ export default {
 
 <style>
 </style>
-
-
-
-
-loadUsers() {
-      fetch(`http://localhost:3000/users`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json"
-        }
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(response => {
-          return (this.users = response);
-        })
-        .catch(error => {
-          console.log("load users didnt work", error);
-        });
-    }
