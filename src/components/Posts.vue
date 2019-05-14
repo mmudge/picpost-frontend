@@ -11,7 +11,7 @@
     <v-layout row wrap justify-center>
       <v-flex xs12 sm3 ma-1 v-for="post in posts" :key="post.id">
         <v-card>
-          <v-img :src="image_src" aspect-ratio="2.75"></v-img>
+          <v-img :src="image_src" aspect-ratio="1.2"></v-img>
 
           <v-card-title primary-title>
             <div>
@@ -23,7 +23,7 @@
 
           <v-card-actions>
             <v-btn flat color="orange">Share with friends</v-btn>
-            <v-btn flat color="orange">Heart</v-btn>
+            <v-btn flat color="yellow">Star</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
