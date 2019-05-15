@@ -1,10 +1,18 @@
 <template>
   <div>
-    <h1>Welcome to your profile dashboard {{ getUser.email }}</h1>
-    <h2>... or do you prefered to be called {{ getUser.username }} ??</h2>
+    <v-container>
+      <v-layout>
+        <v-flex>
+          <h3>
+            Welcome to your profile dashboard
+            <strong>{{ getUser.username }}</strong>
+          </h3>
 
-    <v-btn color="success" dark to="/messages">Check your mailbox</v-btn>
-    <v-btn color="warning" dark to="/posts">check yo posts</v-btn>
+          <v-btn color="success" dark to="/messages">Check your mailbox</v-btn>
+          <v-btn color="warning" dark to="/posts">check yo posts</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
