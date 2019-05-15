@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    appName: 'Pic Post',
+    appName: "Pic Post",
     user: null,
     isAuthenticated: false,
     messages: []
@@ -23,19 +23,17 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    loadMessages({commit}) {
-
-    },
+    loadMessages({ commit }) {},
     userJoin({ commit }, { email, username, password, password_confirmation }) {
       return fetch("http://localhost:3000/signup", {
         method: "POST",
         credentials: "same-origin",
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
-          "Authorization": "JWT"
+          Authorization: "JWT"
         },
-        body: JSON.stringify( {
+        body: JSON.stringify({
           user: {
             email: email,
             username: username,
@@ -44,66 +42,65 @@ export default new Vuex.Store({
           }
         })
       })
-      .then((response) => {
-        response.json();
-        router.push('/login');
-      })
-      .catch(() => {
-        commit('setUser', null);
-        commit("setIsAuthenticated", false);
-        router.push('/');
-      });
+        .then(response => {
+          response.json();
+          router.push("/login");
+        })
+        .catch(() => {
+          commit("setUser", null);
+          commit("setIsAuthenticated", false);
+          router.push("/");
+        });
     },
     userLogin({ commit }, { email, password }) {
-      const u = { user: { email: email, password: password }}
+      const u = { user: { email: email, password: password } };
       return fetch("http://localhost:3000/login", {
         method: "POST",
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
-          "Authorization": "JWT"
+          Authorization: "JWT"
           // "Content-Type": "application/x-www-form-urlencoded",
         },
         body: JSON.stringify(u)
       })
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        console.log(response.username)
-        if (response.token) {
-          // const token = response.token
-          // localStorage.setItem('token', token);
-          // console.log(localStorage)
-          commit("setUser", response);
-          commit("setIsAuthenticated", true);
-          console.log('current user is', response)
-          router.push("/dashboard");
-        }
-      })
-      .catch(() => {
+        .then(response => {
+          return response.json();
+        })
+        .then(response => {
+          console.log(response.username);
+          if (response.token) {
+            // const token = response.token
+            // localStorage.setItem('token', token);
+            // console.log(localStorage)
+            commit("setUser", response);
+            commit("setIsAuthenticated", true);
+            console.log("current user is", response);
+            router.push("/dashboard");
+          }
+        })
+        .catch(() => {
           commit("setUser", null);
           commit("setIsAuthenticated", false);
-          router.push('/');
-      });
+          router.push("/");
+        });
     },
     userSignOut({ commit }) {
       return fetch("http://localhost:3000/logout", {
         method: "DELETE",
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
-          "Authorization": "JWT"
+          Authorization: "JWT"
         },
         body: JSON.stringify(this.state.user)
-      })
-      .then((response) => {
+      }).then(response => {
         commit("setUser", null);
         commit("setIsAuthenticated", false);
-        router.push('/');
-      })
+        router.push("/");
+      });
     }
   },
   getters: {
@@ -112,8 +109,6 @@ export default new Vuex.Store({
     },
     currentUser(state) {
       return state.user;
-    },
-
+    }
   }
 });
-

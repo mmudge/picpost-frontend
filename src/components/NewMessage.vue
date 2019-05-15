@@ -4,9 +4,17 @@
       <v-layout>
         <v-flex>
           <v-form ref="form" lazy-validation>
-            <v-text-field v-model="subject" label="Subject" required></v-text-field>
+            <v-text-field
+              v-model="subject"
+              label="Subject"
+              required
+            ></v-text-field>
 
-            <v-text-field v-model="body" label="Message Body" required></v-text-field>
+            <v-text-field
+              v-model="body"
+              label="Message Body"
+              required
+            ></v-text-field>
 
             <v-btn color="success" @click="createMessage">add message</v-btn>
 
@@ -49,5 +57,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

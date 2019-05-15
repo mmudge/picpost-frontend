@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-navigation-drawer app v-model="drawer" class="blue darken-2" dark disable-resize-watcher>
+    <v-navigation-drawer
+      app
+      v-model="drawer"
+      class="blue darken-2"
+      dark
+      disable-resize-watcher
+    >
       <v-list>
         <v-list-tile v-for="item in sideBar" :key="item.index">
           <v-list-tile-content>{{ item.title }}</v-list-tile-content>
@@ -8,7 +14,10 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar app color="primary" dark>
-      <v-toolbar-side-icon class="hidden-md-and-up" @click="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon
+        class="hidden-md-and-up"
+        @click="drawer = !drawer"
+      ></v-toolbar-side-icon>
       <v-spacer class="hidden-md-and-up"></v-spacer>
       <v-btn flat dark to="/">
         <v-toolbar-title>

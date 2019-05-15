@@ -30,7 +30,7 @@
                 <v-btn color="success" dark v-on="on">view message</v-btn>
               </template>-->
               <v-card>
-                <MessageShow :messageId="message.id"/>
+                <MessageShow :messageId="message.id" />
               </v-card>
             </v-dialog>
             <v-list-tile>
@@ -41,9 +41,13 @@
                 <v-list-tile-title>
                   <strong>{{ message.subject }}</strong>
                 </v-list-tile-title>
-                <v-list-tile-sub-title class="text--primary">{{ message.created_at }}</v-list-tile-sub-title>
+                <v-list-tile-sub-title class="text--primary">{{
+                  message.created_at
+                }}</v-list-tile-sub-title>
 
-                <v-list-tile-sub-title>{{ message.body }}</v-list-tile-sub-title>
+                <v-list-tile-sub-title>{{
+                  message.body
+                }}</v-list-tile-sub-title>
               </v-list-tile-content>
 
               <v-spacer></v-spacer>
@@ -178,5 +182,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

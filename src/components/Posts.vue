@@ -5,7 +5,11 @@
         <v-btn color="success" dark v-on="on">New Post</v-btn>
       </template>
       <v-card>
-        <NewPost v-on:add-post="addPost" :users="users" v-on:closeDialog="dialogOff"/>
+        <NewPost
+          v-on:add-post="addPost"
+          :users="users"
+          v-on:closeDialog="dialogOff"
+        />
       </v-card>
     </v-dialog>
     <v-layout row wrap justify-center>
@@ -30,7 +34,6 @@
     </v-layout>
   </v-container>
 </template>
-
 
 <script>
 import NewPost from "../components/NewPost.vue";
@@ -123,5 +126,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

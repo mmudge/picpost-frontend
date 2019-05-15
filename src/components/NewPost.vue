@@ -4,7 +4,11 @@
       <v-layout>
         <v-flex>
           <v-form ref="form" lazy-validation>
-            <v-text-field v-model="title" label="Post Title" required></v-text-field>
+            <v-text-field
+              v-model="title"
+              label="Post Title"
+              required
+            ></v-text-field>
             <!-- need to add image uploader -->
 
             <v-btn color="success" @click="createPost">add post</v-btn>
@@ -43,5 +47,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

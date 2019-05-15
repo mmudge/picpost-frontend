@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>posts index page put components in here</h1>
-    <Posts/>
+    <Posts />
   </div>
 </template>
 
@@ -16,5 +16,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
