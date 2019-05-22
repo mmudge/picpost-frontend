@@ -1,7 +1,7 @@
 export default class Api {
   // USERS
   // JOIN, SIGN IN, SIGN OUT
-  userJoin({ commit }, { email, username, password, password_confirmation }) {
+  static userJoin({ commit }, { email, username, password, password_confirmation }) {
     return fetch("http://localhost:3000/signup", {
       method: "POST",
       credentials: "same-origin",
@@ -30,7 +30,7 @@ export default class Api {
       });
   }
 
-  userLogin({ commit }, { email, password }) {
+  static userLogin({ commit }, { email, password }) {
     const u = { user: { email: email, password: password } };
     return fetch("http://localhost:3000/login", {
       method: "POST",
@@ -65,7 +65,7 @@ export default class Api {
       });
   }
 
-  userSignOut({ commit }) {
+  static userSignOut({ commit }) {
     return fetch("http://localhost:3000/logout", {
       method: "DELETE",
       credentials: "same-origin", // include, *same-origin, omit
@@ -82,7 +82,7 @@ export default class Api {
     });
   }
 
-  loadUsers() {
+  static loadUsers() {
     fetch(`http://localhost:3000/users`, {
       method: "GET",
       headers: {
@@ -102,7 +102,7 @@ export default class Api {
 
   // POSTS
 
-  getPosts() {
+  static getPosts() {
     fetch(`http://localhost:3000/posts`, {
       method: "GET",
       headers: {
@@ -120,7 +120,7 @@ export default class Api {
       });
   }
 
-  addPost(newPost) {
+  static addPost(newPost) {
     const post = {
       post: {
         title: newPost.title,
@@ -149,7 +149,7 @@ export default class Api {
 
   // MESSAGES
 
-  getMessage() {
+  static getMessage() {
     console.log(this.messageId);
 
     fetch(
@@ -175,7 +175,7 @@ export default class Api {
       });
   }
 
-  addMessage(newMessage) {
+  static addMessage(newMessage) {
     console.log(JSON.stringify(newMessage));
     const m = {
       message: {
@@ -211,7 +211,7 @@ export default class Api {
       });
   }
 
-  checkMessages() {
+  static checkMessages() {
     fetch(`http://localhost:3000/users/${this.$store.state.user.id}/messages`, {
       method: "GET",
       headers: {
@@ -230,7 +230,7 @@ export default class Api {
       });
   }
 
-  deleteMessage(messageId) {
+  static deleteMessage(messageId) {
     fetch(
       `http://localhost:3000/users/${
         this.$store.state.user.id
