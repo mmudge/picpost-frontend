@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "@/router";
+import Api from "./api";
 
 Vue.use(Vuex);
 
@@ -71,13 +72,14 @@ export default new Vuex.Store({
         .then(response => {
           console.log(response.username);
           if (response.token) {
-            // const token = response.token
-            // localStorage.setItem('token', token);
-            // console.log(localStorage)
+            const token = response.token
+            localStorage.setItem('token', token);
+            console.log(localStorage)
             commit("setUser", response);
             commit("setIsAuthenticated", true);
             console.log("current user is", response);
             router.push("/dashboard");
+            Api.getLoggedInUser();
           }
         })
         .catch(() => {
@@ -99,6 +101,7 @@ export default new Vuex.Store({
       }).then(response => {
         commit("setUser", null);
         commit("setIsAuthenticated", false);
+        localStorage.token = '';
         router.push("/");
       });
     }

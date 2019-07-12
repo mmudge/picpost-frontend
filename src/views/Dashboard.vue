@@ -18,6 +18,7 @@
 
 <script>
 import Mailbox from "../components/Mailbox.vue";
+import Api from "../api.js";
 
 export default {
   name: "Dashboard",

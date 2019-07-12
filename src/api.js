@@ -100,6 +100,22 @@ export default class Api {
       });
   }
 
+  static getLoggedInUser() {
+    fetch(`http://localhost:3000/current_user`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json"
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        console.log(response)
+        return response;
+      })
+  }
+
   // POSTS
 
   static getPosts() {
