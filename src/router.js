@@ -85,10 +85,22 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some(record => record.name === 'join')) {
     next();
   } else {
-    next();
-    // Api.getLoggedInUser().then((r) => {
-    //   console.log("current user", r)
-    //   console.log("current user token", r.token)
+    Api.getLoggedInUser().then(next());
+    // if (Api.getLoggedInUser()) {
+    //   next();
+    // } else {
+    //   console.log('api get looged in user was false');
+    //   next({ path: "/login" })
+    // }
+    // .then((res) => {
+    //   if (res) {
+    //     console.log("got a user in router so we good");
+    //     next();
+    //   } else {
+    //     next({
+    //       path: "/login"
+    //     })
+    //   }
     // })
   }
 })

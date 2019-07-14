@@ -1,3 +1,5 @@
+import store from "@/store.js";
+
 export default class Api {
   // USERS
   // JOIN, SIGN IN, SIGN OUT
@@ -104,16 +106,21 @@ export default class Api {
     fetch(`http://localhost:3000/current_user`, {
       method: "GET",
       headers: {
-        Accept: "application/json"
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
       }
     })
       .then(response => {
         return response.json();
       })
       .then(response => {
-        console.log(response)
+        console.log("get user logged in", response);
         return response;
       })
+      .catch(e => console.log("back end broke", e))
+      // get logged in user should commit to the state
+      // sign in should get get logged in user
+      // this should both be in the User.js
   }
 
   // POSTS

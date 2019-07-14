@@ -77,9 +77,8 @@ export default new Vuex.Store({
             console.log(localStorage)
             commit("setUser", response);
             commit("setIsAuthenticated", true);
-            console.log("current user is", response);
+            console.log("(store)current user is", response);
             router.push("/dashboard");
-            Api.getLoggedInUser();
           }
         })
         .catch(() => {
