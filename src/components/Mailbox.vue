@@ -125,72 +125,27 @@ export default {
   methods: {
     dialogToggle() {
       this.dialogNewMessage = !this.dialogNewMessage;
+    },
+    deleteMessage(messageId) {
+      Api.deleteMessage(messageId).then(() => {
+        this.getReceivedMessages();
+        this.getSentMessages();
+      });
+    },
+    getReceivedMessages() {
+      Api.getReceivedMessages().then(response => {
+        this.receivedMessages = response;
+      });
+    },
+    getSentMessages() {
+      Api.getSentMessages().then(response => {
+        this.sentMessages = response;
+      });
     }
-
-    // checkMessages() {
-    //   fetch(
-    //     `http://localhost:3000/users/${this.$store.state.user.id}/messages`,
-    //     {
-    //       method: "GET",
-    //       headers: {
-    //         Accept: "application/json",
-    //         Authorization: `Bearer ${this.$store.state.user.token}`
-    //       }
-    //     }
-    //   )
-    //     .then(response => {
-    //       return response.json();
-    //     })
-    //     .then(response => {
-    //       return (this.messages = response);
-    //     })
-    //     .catch(error => {
-    //       console.log("load message didnt work", error);
-    //     });
-    // },
-    // deleteMessage(messageId) {
-    //   fetch(
-    //     `http://localhost:3000/users/${this.$store.state.user.id}/messages/${messageId}`,
-    //     {
-    //       method: "DELETE",
-    //       headers: {
-    //         Accept: "application/json",
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${this.$store.state.user.token}`
-    //       }
-    //       // body: JSON.stringify({ id: messageId })
-    //     }
-    //   ).then(this.checkMessages());
-    // },
-    // loadUsers() {
-    //   fetch(`http://localhost:3000/users`, {
-    //     method: "GET",
-    //     headers: {
-    //       Accept: "application/json"
-    //     }
-    //   })
-    //     .then(response => {
-    //       return response.json();
-    //     })
-    //     .then(response => {
-    //       return (this.users = response);
-    //     })
-    //     .catch(error => {
-    //       console.log("load users didnt work", error);
-    //     });
-    // }
   },
   mounted() {
-    // this.checkMessages();
-    Api.getReceivedMessages().then(response => {
-      console.log("received messages", response);
-      this.receivedMessages = response;
-    });
-
-    Api.getSentMessages().then(response => {
-      console.log("sent messages", response);
-      this.sentMessages = response;
-    });
+    this.getReceivedMessages();
+    this.getSentMessages();
   }
 };
 </script>

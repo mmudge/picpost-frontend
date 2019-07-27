@@ -62,7 +62,6 @@ export default {
     Api.getUsers().then(response => {
       this.users = response;
     });
-    console.log(this.$parent);
   }
 };
 </script>

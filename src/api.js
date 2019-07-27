@@ -119,14 +119,14 @@ export default class Api {
         return response.json();
       })
       .then(response => {
-        console.log("get user logged in returning this", response);
         if (response.error) {
           store.commit('setUser', null)
           localStorage.token = null
         } else {
           store.commit("setUser", response);
+
         }
-        console.log('should have hit store commits in api get logged in user')
+        console.log('user logged in as ', response.email)
         return response;
       })
       .catch((e)  => {
@@ -165,7 +165,6 @@ export default class Api {
         return response.json();
       })
       .then(response => {
-        console.log("all users", response)
         return response;
       })
       .catch((e) => {
@@ -223,17 +222,15 @@ export default class Api {
   // MESSAGES
 
   static getMessage() {
-    console.log(this.messageId);
-
     fetch(
-      `http://localhost:3000/users/${this.$store.state.user.id}/messages/${
+      `http://localhost:3000/users/${store.state.user.id}/messages/${
         this.messageId
       }`,
       {
         method: "GET",
         headers: {
           Accept: "application/json",
-          Authorization: `Bearer ${this.$store.state.user.token}`
+          Authorization: `Bearer ${localStorage.token}`
         }
       }
     )
@@ -241,7 +238,7 @@ export default class Api {
         return response.json();
       })
       .then(response => {
-        return (this.message = response);
+        return response;
       })
       .catch(error => {
         console.log("load message didnt work", error);
@@ -280,25 +277,6 @@ export default class Api {
       })
       .catch(error => {
         console.log("post message didnt work", error);
-      });
-  }
-
-  static checkMessages() {
-    return fetch(`http://localhost:3000/users/${store.state.user.id}/messages`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${localStorage.token}`
-      }
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(response => {
-        return response
-      })
-      .catch(error => {
-        console.log("load message didnt work", error);
       });
   }
 
@@ -341,20 +319,18 @@ export default class Api {
   }
 
   static deleteMessage(messageId) {
-    fetch(
+    return fetch(
       `http://localhost:3000/users/${
-        this.$store.state.user.id
+        store.state.user.id
       }/messages/${messageId}`,
       {
         method: "DELETE",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${this.$store.state.user.token}`
+          Authorization: `Bearer ${localStorage.token}`
         }
-        // body: JSON.stringify({ id: messageId })
-      }
-    ).then(this.checkMessages());
+      })
   }
 }
 
