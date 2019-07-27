@@ -29,7 +29,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="submit">Login</v-btn>
+            <v-btn color="primary" @click="login">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import Api from "../api.js";
+
 export default {
   name: "Login",
   data() {
@@ -48,11 +50,10 @@ export default {
     };
   },
   methods: {
-    submit() {
+    login() {
       if (this.$refs.form.validate()) {
-        this.$store.dispatch("userLogin", {
-          email: this.email,
-          password: this.password
+        Api.userLogin(this.email, this.password).then(() => {
+          this.$router.push("/dashboard");
         });
       }
     }

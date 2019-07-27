@@ -74,10 +74,12 @@ const router = new Router({
 //   }
 // });
 
+// working kinda
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.authRequired)) {
     Api.getLoggedInUser().then(() => {
       if (!store.state.user) {
+        console.log('no user in store from router')
         next({
           path: "/login"
         });
@@ -93,34 +95,6 @@ router.beforeEach((to, from, next) => {
 // make request to /user that returns the current user and sets the token to be the token
 // if !user then redirect to sign in
 // need to skil before log in and sign up and homepage
-
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.name === 'home')) {
-//     next();
-//   } else if (to.matched.some(record => record.name === 'login')) {
-//     next();
-//   } else if (to.matched.some(record => record.name === 'join')) {
-//     next();
-//   } else {
-//     Api.getLoggedInUser().then(next());
-//     // if (Api.getLoggedInUser()) {
-//     //   next();
-//     // } else {
-//     //   console.log('api get looged in user was false');
-//     //   next({ path: "/login" })
-//     // }
-//     // .then((res) => {
-//     //   if (res) {
-//     //     console.log("got a user in router so we good");
-//     //     next();
-//     //   } else {
-//     //     next({
-//     //       path: "/login"
-//     //     })
-//     //   }
-//     // })
-//   }
-// })
 
 
 export default router;
