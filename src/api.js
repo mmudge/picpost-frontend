@@ -133,9 +133,6 @@ export default class Api {
         console.log("back end broke", e)
         return e
       })
-      // get logged in user should commit to the state
-      // sign in should get get logged in user
-      // this should both be in the User.js
   }
 
   static getUser(id) {
@@ -154,9 +151,26 @@ export default class Api {
         return response;
       })
       .catch(e => console.log("back end broke", e))
-    // get logged in user should commit to the state
-    // sign in should get get logged in user
-    // this should both be in the User.js
+  }
+
+  static getUsers() {
+    return fetch(`http://localhost:3000/users`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        console.log("all users", response)
+        return response;
+      })
+      .catch((e) => {
+        console.log("back end broke", e)
+      })
   }
 
   // POSTS
@@ -234,25 +248,25 @@ export default class Api {
       });
   }
 
-  static addMessage(newMessage) {
-    console.log(JSON.stringify(newMessage));
+  static addMessage(messageInfo) {
     const m = {
       message: {
-        subject: newMessage.subject,
-        body: newMessage.body,
-        user_id: this.$store.state.user.id
+        subject: messageInfo.subject,
+        body: messageInfo.body,
+        sender_id: store.state.user.id,
+        user_id: messageInfo.receiver_id
       }
     };
 
     return fetch(
-      `http://localhost:3000/users/${this.$store.state.user.id}/messages`,
+      `http://localhost:3000/users/${store.state.user.id}/messages`,
       {
         method: "POST",
         credentials: "same-origin",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${this.$store.state.user.token}`
+          Authorization: `Bearer ${localStorage.token}`
         },
         body: JSON.stringify(m)
       }
@@ -261,9 +275,8 @@ export default class Api {
         return response.json();
       })
       .then(response => {
-        console.log(response);
-        this.dialogNewMessage = false;
-        return this.messages.push(response);
+        console.log("message response", response);
+        return response
       })
       .catch(error => {
         console.log("post message didnt work", error);
