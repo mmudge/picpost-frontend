@@ -88,24 +88,6 @@ export default class Api {
     });
   }
 
-  static loadUsers() {
-    fetch(`http://localhost:3000/users`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json"
-      }
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(response => {
-        return (this.users = response);
-      })
-      .catch(error => {
-        console.log("load users didnt work", error);
-      });
-  }
-
   static getLoggedInUser() {
 
     return fetch(`http://localhost:3000/current_user`, {
@@ -175,7 +157,7 @@ export default class Api {
   // POSTS
 
   static getPosts() {
-    fetch(`http://localhost:3000/posts`, {
+    return fetch(`http://localhost:3000/posts`, {
       method: "GET",
       headers: {
         Accept: "application/json"
@@ -185,27 +167,27 @@ export default class Api {
         return res.json();
       })
       .then(res => {
-        return (this.posts = res);
+        return res
       })
       .catch(err => {
-        console.log("get posts didnt work", err);
+        console.log("get posts backend broke", err);
       });
   }
 
-  static addPost(newPost) {
+  static createPost(newPost) {
     const post = {
       post: {
         title: newPost.title,
-        user_id: this.$store.state.user.id
+        user_id: newPost.user_id
       }
     };
 
-    fetch(`http://localhost:3000/posts`, {
+    return fetch(`http://localhost:3000/posts`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${this.$store.state.user.token}`
+        Authorization: `Bearer ${localStorage.token}`
       },
       body: JSON.stringify(post)
     })
@@ -213,9 +195,7 @@ export default class Api {
         return response.json();
       })
       .then(response => {
-        console.log(response);
-        this.dialogNewPost = false;
-        return this.posts.push(response);
+        return response
       });
   }
 

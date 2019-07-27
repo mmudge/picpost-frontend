@@ -19,3 +19,12 @@ export default {
   }
 };
 </script>
+
+<style>
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+

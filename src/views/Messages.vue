@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>this is the messages page</h1>
     <Mailbox />
   </div>
 </template>

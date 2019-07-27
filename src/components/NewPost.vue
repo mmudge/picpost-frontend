@@ -4,14 +4,10 @@
       <v-layout>
         <v-flex>
           <v-form ref="form" lazy-validation>
-            <v-text-field
-              v-model="title"
-              label="Post Title"
-              required
-            ></v-text-field>
+            <v-text-field v-model="title" label="Post Title" required></v-text-field>
             <!-- need to add image uploader -->
 
-            <v-btn color="success" @click="createPost">add post</v-btn>
+            <v-btn color="success" @click="createPost">Create post</v-btn>
 
             <v-btn color="error" @click="reset">Reset Form</v-btn>
           </v-form>
@@ -22,6 +18,9 @@
 </template>
 
 <script>
+import Api from "../api.js";
+import store from "@/store.js";
+
 export default {
   name: "NewPost",
   data() {
@@ -34,10 +33,12 @@ export default {
     createPost() {
       const newPost = {
         title: this.title,
-        user_id: this.$store.state.user.id
+        user_id: store.state.user.id
       };
-      this.$emit("add-post", newPost);
-      this.$emit("closeDialog", false);
+      Api.createPost(newPost).then(() => {
+        this.$emit("getPosts");
+      });
+      this.$emit("dialogToggle");
       this.reset();
     },
     reset() {

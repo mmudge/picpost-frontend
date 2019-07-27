@@ -1,15 +1,32 @@
 <template>
-  <div>
-    <h1>this is the home page</h1>
-    <p>you should log in homie :p</p>
+  <div id="homepage" class="flex-center">
+    <div v-if="userLoggedIn">
+      <h1>Welcome to the homepage, {{ userLoggedIn.email }}</h1>
+    </div>
+    <div v-else>
+      <h1>Welcome, please log in</h1>
+      <v-btn to="/login" outline flat color="green">Log in</v-btn>
+    </div>
   </div>
 </template>
 
 <script>
 import Api from "../api.js";
+import store from "@/store.js";
 
 export default {
   name: "Home",
+  computed: {
+    userLoggedIn() {
+      return store.state.user;
+    }
+  },
   mounted() {}
 };
 </script>
+
+<style lang="scss">
+#homepage {
+  height: 100vh;
+}
+</style>

@@ -5,11 +5,7 @@
         <v-btn color="success" dark v-on="on">New Post</v-btn>
       </template>
       <v-card>
-        <NewPost
-          v-on:add-post="addPost"
-          :users="users"
-          v-on:closeDialog="dialogOff"
-        />
+        <NewPost v-on:getPosts="getPosts" v-on:dialogToggle="dialogToggle" />
       </v-card>
     </v-dialog>
     <v-layout row wrap justify-center>
@@ -37,6 +33,9 @@
 
 <script>
 import NewPost from "../components/NewPost.vue";
+import Api from "../api.js";
+import store from "@/store.js";
+
 export default {
   name: "Posts",
   components: {
@@ -53,67 +52,17 @@ export default {
   },
   methods: {
     getPosts() {
-      fetch(`http://localhost:3000/posts`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json"
-        }
-      })
-        .then(res => {
-          return res.json();
-        })
-        .then(res => {
-          return (this.posts = res);
-        })
-        .catch(err => {
-          console.log("get posts didnt work", err);
-        });
-    },
-    addPost(newPost) {
-      const post = {
-        post: {
-          title: newPost.title,
-          user_id: this.$store.state.user.id
-        }
-      };
-
-      fetch(`http://localhost:3000/posts`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.$store.state.user.token}`
-        },
-        body: JSON.stringify(post)
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(response => {
-          console.log(response);
-          this.dialogNewPost = false;
-          return this.posts.push(response);
-        });
+      Api.getPosts().then(response => {
+        this.posts = response;
+      });
     },
     loadUsers() {
-      fetch(`http://localhost:3000/users`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json"
-        }
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(response => {
-          return (this.users = response);
-        })
-        .catch(error => {
-          console.log("load users didnt work", error);
-        });
+      Api.getUsers().then(response => {
+        this.users = response;
+      });
     },
-    dialogOff() {
-      this.dialog = false;
+    dialogToggle() {
+      this.dialogNewPost = !this.dialogNewPost;
     },
     findPostUser(id) {
       return this.users.filter(u => u.id === id)[0].username;
