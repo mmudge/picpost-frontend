@@ -2,8 +2,17 @@
   <div>
     <v-navigation-drawer app v-model="drawer" class="blue darken-2" dark disable-resize-watcher>
       <v-list>
-        <v-list-tile v-for="item in sideBar" :key="item.index">
+        <v-list-tile v-for="item in sideBar" :key="item.index" :to="item.link">
           <v-list-tile-content>{{ item.title }}</v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile to="/login" v-if="!isAuthenticated">
+          <v-list-tile-content>Login</v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile to="/join" v-if="!isAuthenticated">
+          <v-list-tile-content>Join</v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="logout()" v-if="isAuthenticated">
+          <v-list-tile-content>Sign out</v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
@@ -20,10 +29,10 @@
       <v-spacer class="hidden-sm-and-down"></v-spacer>
       <v-toolbar-items v-if="!isAuthenticated" class="hidden-sm-and-down">
         <v-btn flat to="/posts">Posts</v-btn>
-        <v-btn to="/login" flat class="hidden-sm-and-down">Login</v-btn>
-        <v-btn to="/join" flat class="hidden-sm-and-down">Sign Up</v-btn>
+        <v-btn to="/login" flat>Login</v-btn>
+        <v-btn to="/join" flat>Sign Up</v-btn>
       </v-toolbar-items>
-      <v-toolbar-items v-else>
+      <v-toolbar-items v-else class="hidden-sm-and-down">
         <v-btn flat to="/posts">Posts</v-btn>
         <v-btn flat to="/dashboard">Dashboard</v-btn>
         <v-btn flat to="/messages">Messages</v-btn>
@@ -41,11 +50,9 @@ export default {
     return {
       drawer: false,
       sideBar: [
-        { title: "Profile" },
-        { title: "Messages" },
-        { title: "About" },
-        { title: "Login" },
-        { title: "Join" }
+        { title: "Dashboard", link: "/dashboard" },
+        { title: "Messages", link: "/messages" },
+        { title: "Posts", link: "/posts" }
       ]
     };
   },
@@ -63,6 +70,11 @@ export default {
       Api.userSignOut().then(() => {
         this.$router.push("/");
       });
+    },
+    checkLogout(title) {
+      if (title == "logout") {
+        this.logout();
+      }
     }
   }
 };
