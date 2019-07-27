@@ -1,7 +1,11 @@
+import store from "@/store.js";
+
 export default class Api {
   // USERS
   // JOIN, SIGN IN, SIGN OUT
-  static userJoin({ commit }, { email, username, password, password_confirmation }) {
+
+
+  static userJoin(email, username, password, password_confirmation) {
     return fetch("http://localhost:3000/signup", {
       method: "POST",
       credentials: "same-origin",
@@ -20,26 +24,28 @@ export default class Api {
       })
     })
       .then(response => {
-        response.json();
-        router.push("/login");
+        return response.json();
+
+      }).then((response) => {
+        console.log('Joined with', response.email, password)
+        return response;
       })
       .catch(() => {
-        commit("setUser", null);
-        commit("setIsAuthenticated", false);
-        router.push("/");
+        store.commit("setUser", null);
+        localStorage.token = null;
       });
   }
 
-  static userLogin({ commit }, { email, password }) {
+  static userLogin(email, password) {
     const u = { user: { email: email, password: password } };
     return fetch("http://localhost:3000/login", {
       method: "POST",
-      credentials: "same-origin", // include, *same-origin, omit
+      credentials: "same-origin",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "JWT"
-        // "Content-Type": "application/x-www-form-urlencoded",
+
       },
       body: JSON.stringify(u)
     })
@@ -47,25 +53,25 @@ export default class Api {
         return response.json();
       })
       .then(response => {
-        console.log(response.username);
         if (response.token) {
-          // const token = response.token
-          // localStorage.setItem('token', token);
-          // console.log(localStorage)
-          commit("setUser", response);
-          commit("setIsAuthenticated", true);
-          console.log("current user is", response);
-          router.push("/dashboard");
+          const token = response.token
+          localStorage.setItem('token', token);
+          store.commit("setUser", response);
+
+          console.log("user logged in (with token) as", response.email);
+          // router.push("/dashboard");
+        } else {
+          console.log("no token in response, devise session jwt is broke")
         }
       })
       .catch(() => {
-        commit("setUser", null);
-        commit("setIsAuthenticated", false);
-        router.push("/");
+        console.log('user log in backend broke')
+        store.commit("setUser", null);
+        localStorage.token = null;
       });
   }
 
-  static userSignOut({ commit }) {
+  static userSignOut() {
     return fetch("http://localhost:3000/logout", {
       method: "DELETE",
       credentials: "same-origin", // include, *same-origin, omit
@@ -74,11 +80,11 @@ export default class Api {
         "Content-Type": "application/json",
         Authorization: "JWT"
       },
-      body: JSON.stringify(this.state.user)
-    }).then(response => {
-      commit("setUser", null);
-      commit("setIsAuthenticated", false);
-      router.push("/");
+      body: JSON.stringify(store.state.user)
+    }).then(() => {
+      store.commit("setUser", null);
+      localStorage.token = null;
+      console.log('logged out')
     });
   }
 
@@ -98,6 +104,59 @@ export default class Api {
       .catch(error => {
         console.log("load users didnt work", error);
       });
+  }
+
+  static getLoggedInUser() {
+
+    return fetch(`http://localhost:3000/current_user`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        console.log("get user logged in returning this", response);
+        if (response.error) {
+          store.commit('setUser', null)
+          localStorage.token = null
+        } else {
+          store.commit("setUser", response);
+        }
+        console.log('should have hit store commits in api get logged in user')
+        return response;
+      })
+      .catch((e)  => {
+        console.log("back end broke", e)
+        return e
+      })
+      // get logged in user should commit to the state
+      // sign in should get get logged in user
+      // this should both be in the User.js
+  }
+
+  static getUser(id) {
+    fetch(`http://localhost:3000/users/${encodeURIComponent(id)}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        console.log("get user logged in", response);
+        return response;
+      })
+      .catch(e => console.log("back end broke", e))
+    // get logged in user should commit to the state
+    // sign in should get get logged in user
+    // this should both be in the User.js
   }
 
   // POSTS
@@ -247,3 +306,5 @@ export default class Api {
     ).then(this.checkMessages());
   }
 }
+
+window.Api = Api

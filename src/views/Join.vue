@@ -46,7 +46,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="submit">Join</v-btn>
+            <v-btn color="primary" @click="submitUserJoin">Join</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import Api from "../api.js";
+
 export default {
   name: "Join",
   data() {
@@ -66,12 +68,16 @@ export default {
     };
   },
   methods: {
-    submit() {
-      this.$store.dispatch("userJoin", {
-        email: this.email,
-        username: this.username,
-        password: this.password,
-        password_confirmation: this.password_confirmation
+    submitUserJoin() {
+      Api.userJoin(
+        this.email,
+        this.username,
+        this.password,
+        this.password_confirmation
+      ).then(() => {
+        Api.userLogin(this.email, this.password).then(() => {
+          this.$router.push("/dashboard");
+        });
       });
     }
   }
