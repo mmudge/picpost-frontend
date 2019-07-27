@@ -50,7 +50,6 @@ export default {
 
       Api.addMessage(messageInfo);
       this.$emit("dialogToggle");
-      // this.$parent.dialogOff();
       this.reset();
     },
     reset() {
@@ -61,9 +60,6 @@ export default {
   },
   mounted() {
     Api.getUsers().then(response => {
-      // response.forEach(user => {
-      //   this.items.push(user.username);
-      // });
       this.users = response;
     });
     console.log(this.$parent);

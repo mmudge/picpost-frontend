@@ -284,21 +284,40 @@ export default class Api {
   }
 
   static checkMessages() {
-    fetch(`http://localhost:3000/users/${this.$store.state.user.id}/messages`, {
+    return fetch(`http://localhost:3000/users/${store.state.user.id}/messages`, {
       method: "GET",
       headers: {
         Accept: "application/json",
-        Authorization: `Bearer ${this.$store.state.user.token}`
+        Authorization: `Bearer ${localStorage.token}`
       }
     })
       .then(response => {
         return response.json();
       })
       .then(response => {
-        return (this.messages = response);
+        return response
       })
       .catch(error => {
         console.log("load message didnt work", error);
+      });
+  }
+
+  static getReceivedMessages() {
+    return fetch(`http://localhost:3000/users/${store.state.user.id}/received_messages`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        return response;
+      })
+      .catch(error => {
+        console.log("back end received messages broke", error);
       });
   }
 

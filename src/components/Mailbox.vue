@@ -142,7 +142,10 @@ export default {
   },
   mounted() {
     // this.checkMessages();
-    // this.loadUsers();
+    Api.getReceivedMessages().then(response => {
+      console.log("received messages", response);
+      this.messages = response;
+    });
   }
 };
 </script>
