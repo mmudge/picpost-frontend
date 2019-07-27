@@ -29,7 +29,8 @@ export default {
     getUser() {
       return this.$store.getters.currentUser;
     }
-  }
+  },
+  mounted() {}
 };
 </script>
 

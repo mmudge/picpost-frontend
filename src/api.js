@@ -103,7 +103,35 @@ export default class Api {
   }
 
   static getLoggedInUser() {
-    fetch(`http://localhost:3000/current_user`, {
+    return fetch(`http://localhost:3000/current_user`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(response => {
+        console.log("api current user fetch first response", response)
+        return response.json();
+      })
+      .then(response => {
+        console.log("get user logged in returning this", response);
+        store.commit("setUser", response);
+        store.commit("setIsAuthenticated", true);
+        console.log('should have hit store commits in api get logged in user')
+        return response;
+      })
+      .catch((e)  => {
+        console.log("back end broke", e)
+        return e
+      })
+      // get logged in user should commit to the state
+      // sign in should get get logged in user
+      // this should both be in the User.js
+  }
+
+  static getUser(id) {
+    fetch(`http://localhost:3000/users/${encodeURIComponent(id)}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -118,9 +146,9 @@ export default class Api {
         return response;
       })
       .catch(e => console.log("back end broke", e))
-      // get logged in user should commit to the state
-      // sign in should get get logged in user
-      // this should both be in the User.js
+    // get logged in user should commit to the state
+    // sign in should get get logged in user
+    // this should both be in the User.js
   }
 
   // POSTS
@@ -270,3 +298,5 @@ export default class Api {
     ).then(this.checkMessages());
   }
 }
+
+window.Api = Api

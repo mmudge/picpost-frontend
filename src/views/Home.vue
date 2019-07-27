@@ -6,7 +6,10 @@
 </template>
 
 <script>
+import Api from "../api.js";
+
 export default {
-  name: "Home"
+  name: "Home",
+  mounted() {}
 };
 </script>

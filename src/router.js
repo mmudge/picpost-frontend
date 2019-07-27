@@ -43,7 +43,8 @@ const router = new Router({
       path: "/posts",
       name: "posts",
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/PostsIndex.vue")
+        import(/* webpackChunkName: "about" */ "./views/PostsIndex.vue"),
+      meta: { authRequired: true }
     },
     {
       path: "/login",
@@ -73,37 +74,53 @@ const router = new Router({
 //   }
 // });
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.authRequired)) {
+    Api.getLoggedInUser().then(() => {
+      if (!store.state.user) {
+        next({
+          path: "/login"
+        });
+      } else {
+        next();
+      }
+    })
+  } else {
+    next();
+  }
+});
+
 // make request to /user that returns the current user and sets the token to be the token
 // if !user then redirect to sign in
 // need to skil before log in and sign up and homepage
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.name === 'home')) {
-    next();
-  } else if (to.matched.some(record => record.name === 'login')) {
-    next();
-  } else if (to.matched.some(record => record.name === 'join')) {
-    next();
-  } else {
-    Api.getLoggedInUser().then(next());
-    // if (Api.getLoggedInUser()) {
-    //   next();
-    // } else {
-    //   console.log('api get looged in user was false');
-    //   next({ path: "/login" })
-    // }
-    // .then((res) => {
-    //   if (res) {
-    //     console.log("got a user in router so we good");
-    //     next();
-    //   } else {
-    //     next({
-    //       path: "/login"
-    //     })
-    //   }
-    // })
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.name === 'home')) {
+//     next();
+//   } else if (to.matched.some(record => record.name === 'login')) {
+//     next();
+//   } else if (to.matched.some(record => record.name === 'join')) {
+//     next();
+//   } else {
+//     Api.getLoggedInUser().then(next());
+//     // if (Api.getLoggedInUser()) {
+//     //   next();
+//     // } else {
+//     //   console.log('api get looged in user was false');
+//     //   next({ path: "/login" })
+//     // }
+//     // .then((res) => {
+//     //   if (res) {
+//     //     console.log("got a user in router so we good");
+//     //     next();
+//     //   } else {
+//     //     next({
+//     //       path: "/login"
+//     //     })
+//     //   }
+//     // })
+//   }
+// })
 
 
 export default router;
