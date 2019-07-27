@@ -29,6 +29,7 @@
 
 <script>
 import Api from "../api.js";
+import store from "@/store.js";
 
 export default {
   name: "NewMessage",
@@ -48,7 +49,12 @@ export default {
         receiver_id: this.receiver.id
       };
 
-      Api.addMessage(messageInfo);
+      Api.addMessage(messageInfo).then(() => {
+        store.commit("setSnackbar", {
+          text: "Message sent!",
+          color: "success"
+        });
+      });
       this.$emit("dialogToggle");
       this.reset();
     },

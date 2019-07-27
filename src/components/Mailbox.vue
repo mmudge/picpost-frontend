@@ -122,6 +122,10 @@ export default {
     },
     deleteMessage(messageId) {
       Api.deleteMessage(messageId).then(() => {
+        this.$store.commit("setSnackbar", {
+          text: "Message deleted!",
+          color: "error"
+        });
         this.checkAllMessages();
       });
     },

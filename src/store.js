@@ -10,18 +10,18 @@ export default new Vuex.Store({
     appName: "Pic Post",
     user: null,
     isAuthenticated: false,
-    messages: []
+    snackbar: {}
   },
   mutations: {
     setUser(state, payload) {
       state.user = payload;
     },
-    setMessages(state, payload) {
-      state.messages.push(payload);
-    }
+    setSnackbar(state, payload) {
+      state.snackbar = payload;
+    },
   },
   actions: {
-    loadMessages({ commit }) {},
+
   },
   getters: {
     currentUser(state) {

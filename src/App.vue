@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <Snackbar />
     <Nav />
     <v-content transition="slide-x-transition">
       <router-view />
@@ -9,10 +10,12 @@
 
 <script>
 import Nav from "./components/Nav.vue";
+import Snackbar from "./components/Snackbar.vue";
 export default {
   name: "App",
   components: {
-    Nav
+    Nav,
+    Snackbar
   },
   data() {
     return {};

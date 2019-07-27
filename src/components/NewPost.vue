@@ -37,6 +37,10 @@ export default {
       };
       Api.createPost(newPost).then(() => {
         this.$emit("getPosts");
+        store.commit("setSnackbar", {
+          text: "Post created!",
+          color: "success"
+        });
       });
       this.$emit("dialogToggle");
       this.reset();
