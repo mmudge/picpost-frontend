@@ -321,6 +321,25 @@ export default class Api {
       });
   }
 
+  static getSentMessages() {
+    return fetch(`http://localhost:3000/users/${store.state.user.id}/sent_messages`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        return response;
+      })
+      .catch(error => {
+        console.log("back end received messages broke", error);
+      });
+  }
+
   static deleteMessage(messageId) {
     fetch(
       `http://localhost:3000/users/${

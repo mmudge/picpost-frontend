@@ -19,16 +19,55 @@
               </v-card>
             </v-dialog>
           </v-toolbar>
-
-          <v-list three-line v-for="message in messages" :key="message.id">
-            <v-dialog v-model="dialogMessageShow" width="500" pa-5>
-              <!-- <template v-slot:activator="{ on }">
+          <h2>Received Messages</h2>
+          <v-list three-line v-for="message in receivedMessages" :key="message.id">
+            <!-- <v-dialog v-model="dialogMessageShow" width="500" pa-5>
+               <template v-slot:activator="{ on }">
                 <v-btn color="success" dark v-on="on">view message</v-btn>
-              </template>-->
+              </template>
               <v-card>
                 <MessageShow :messageId="message.id" />
               </v-card>
-            </v-dialog>
+            </v-dialog>-->
+            <v-list-tile>
+              <v-list-tile-content
+                style="cursor: pointer;"
+                @click="dialogMessageShow = !dialogMessageShow"
+              >
+                <v-list-tile-title>
+                  <strong>{{ message.subject }}</strong>
+                </v-list-tile-title>
+                <v-list-tile-sub-title class="text--primary">
+                  {{
+                  message.created_at
+                  }}
+                </v-list-tile-sub-title>
+
+                <v-list-tile-sub-title>
+                  {{
+                  message.body
+                  }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+
+              <v-spacer></v-spacer>
+
+              <v-btn icon @click="deleteMessage(message.id)">
+                <v-icon>delete</v-icon>
+              </v-btn>
+            </v-list-tile>
+          </v-list>
+
+          <h2>Sent Messages</h2>
+          <v-list three-line v-for="message in sentMessages" :key="message.id">
+            <!-- <v-dialog v-model="dialogMessageShow" width="500" pa-5>
+               <template v-slot:activator="{ on }">
+                <v-btn color="success" dark v-on="on">view message</v-btn>
+              </template>
+              <v-card>
+                <MessageShow :messageId="message.id" />
+              </v-card>
+            </v-dialog>-->
             <v-list-tile>
               <v-list-tile-content
                 style="cursor: pointer;"
@@ -76,7 +115,8 @@ export default {
   },
   data() {
     return {
-      messages: [],
+      receivedMessages: [],
+      sentMessages: [],
       users: [],
       dialogNewMessage: false,
       dialogMessageShow: false
@@ -144,7 +184,12 @@ export default {
     // this.checkMessages();
     Api.getReceivedMessages().then(response => {
       console.log("received messages", response);
-      this.messages = response;
+      this.receivedMessages = response;
+    });
+
+    Api.getSentMessages().then(response => {
+      console.log("sent messages", response);
+      this.sentMessages = response;
     });
   }
 };
