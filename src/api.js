@@ -118,7 +118,7 @@ export default class Api {
   }
 
   static getUser(id) {
-    fetch(`http://localhost:3000/users/${encodeURIComponent(id)}`, {
+    return fetch(`http://localhost:3000/users/${id}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -201,11 +201,9 @@ export default class Api {
 
   // MESSAGES
 
-  static getMessage() {
-    fetch(
-      `http://localhost:3000/users/${store.state.user.id}/messages/${
-        this.messageId
-      }`,
+  static getMessage(id) {
+    return fetch(
+      `http://localhost:3000/users/${store.state.user.id}/messages/${id}`,
       {
         method: "GET",
         headers: {

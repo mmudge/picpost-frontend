@@ -18,18 +18,10 @@
     </v-toolbar>
     <h2>Received Messages</h2>
     <v-list three-line v-for="message in receivedMessages" :key="message.id">
-      <!-- <v-dialog v-model="dialogMessageShow" width="500" pa-5>
-               <template v-slot:activator="{ on }">
-                <v-btn color="success" dark v-on="on">view message</v-btn>
-              </template>
-              <v-card>
-                <MessageShow :messageId="message.id" />
-              </v-card>
-      </v-dialog>-->
       <v-list-tile>
         <v-list-tile-content
           style="cursor: pointer;"
-          @click="dialogMessageShow = !dialogMessageShow"
+          @click="$router.push({name: 'message', params: { id: message.id }})"
         >
           <v-list-tile-title>
             <strong>Subject: {{ message.subject }}</strong>
@@ -57,18 +49,10 @@
 
     <h2>Sent Messages</h2>
     <v-list three-line v-for="message in sentMessages" :key="message.id">
-      <!-- <v-dialog v-model="dialogMessageShow" width="500" pa-5>
-               <template v-slot:activator="{ on }">
-                <v-btn color="success" dark v-on="on">view message</v-btn>
-              </template>
-              <v-card>
-                <MessageShow :messageId="message.id" />
-              </v-card>
-      </v-dialog>-->
       <v-list-tile>
         <v-list-tile-content
           style="cursor: pointer;"
-          @click="dialogMessageShow = !dialogMessageShow"
+          @click="$router.push({name: 'message', params: { id: message.id }})"
         >
           <v-list-tile-title>
             <strong>Subject: {{ message.subject }}</strong>
@@ -98,14 +82,12 @@
 
 <script>
 import NewMessage from "../components/NewMessage.vue";
-import MessageShow from "../components/MessageShow.vue";
 import Api from "../api.js";
 
 export default {
   name: "Mailbox",
   components: {
-    NewMessage,
-    MessageShow
+    NewMessage
   },
   data() {
     return {

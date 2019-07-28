@@ -40,6 +40,16 @@ const router = new Router({
       }
     },
     {
+      path: "/message/:id",
+      name: "message",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/Message.vue"),
+      meta: {
+        authRequired: true
+      },
+      props: true
+    },
+    {
       path: "/posts",
       name: "posts",
       component: () =>
