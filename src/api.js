@@ -108,7 +108,7 @@ export default class Api {
           store.commit("setUser", response);
 
         }
-        console.log('user logged in as ', response.email)
+        console.log('User logged in as ', response.email)
         return response;
       })
       .catch((e)  => {
@@ -129,7 +129,7 @@ export default class Api {
         return response.json();
       })
       .then(response => {
-        console.log("get user logged in", response);
+        console.log("get user ", response);
         return response;
       })
       .catch(e => console.log("back end broke", e))

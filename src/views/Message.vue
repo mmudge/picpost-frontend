@@ -37,7 +37,6 @@ export default {
       })
       .then(response => {
         Api.getUser(response.sender_id).then(response => {
-          console.log("sender is", response);
           this.sender = response;
         });
       });

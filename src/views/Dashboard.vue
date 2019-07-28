@@ -1,18 +1,18 @@
 <template>
   <div>
-    <v-container>
-      <v-layout>
+    <v-container id="dashboard" class="flex-center">
+      <div class="flex-center">
         <v-flex>
-          <h3>
-            Welcome to your profile dashboard
+          <h1>
+            Welcome to your dashboard
             <strong v-if="getUser.username">{{ getUser.username }}</strong>
-          </h3>
-          <h3>welcome no named person, make a friggen username</h3>
+            <strong v-else>welcome no named person, make a friggen username</strong>
+          </h1>
 
-          <v-btn color="success" dark to="/messages">Check your mailbox</v-btn>
-          <v-btn color="warning" dark to="/posts">check yo posts</v-btn>
+          <v-btn color="success" dark to="/messages">Mailbox</v-btn>
+          <v-btn color="warning" dark to="/posts">Posts</v-btn>
         </v-flex>
-      </v-layout>
+      </div>
     </v-container>
   </div>
 </template>
@@ -37,4 +37,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+#dashboard {
+  height: 70vh;
+}
+</style>
