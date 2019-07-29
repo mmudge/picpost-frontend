@@ -11,6 +11,17 @@
 
           <v-btn color="success" dark to="/messages">Mailbox</v-btn>
           <v-btn color="warning" dark to="/posts">Posts</v-btn>
+          <h2>Things I want to add (TODOs):</h2>
+          <ul>
+            <li>comment on posts</li>
+            <li>like / dislike posts</li>
+            <li>edit user info</li>
+            <li>profile page</li>
+            <li>messages - unread / read state</li>
+            <li>sent / received tabs</li>
+            <li>back end test suite</li>
+            <li>integrate active storage uploads from front end (somehow?) :\</li>
+          </ul>
         </v-flex>
       </div>
     </v-container>
