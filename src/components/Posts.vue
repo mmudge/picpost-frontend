@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-dialog v-model="dialogNewPost" width="500" pa-5>
       <template v-slot:activator="{ on }">
         <v-btn color="success" dark v-on="on">New Post</v-btn>
@@ -9,8 +9,8 @@
       </v-card>
     </v-dialog>
     <v-layout row wrap justify-center>
-      <v-flex xs12 sm3 ma-1 v-for="post in posts" :key="post.id">
-        <v-card>
+      <v-flex xs12 sm3 v-for="post in posts" :key="post.id">
+        <v-card class="ma-1">
           <v-img :src="image_src" aspect-ratio="1.2"></v-img>
 
           <v-card-title primary-title>
