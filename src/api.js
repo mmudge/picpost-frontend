@@ -310,6 +310,36 @@ export default class Api {
         }
       })
   }
+
+  // COMMENTS
+
+  static createComment(comment) {
+    console.log("comment being passed to api", comment)
+    const new_comment =  {
+        remark: comment.remark,
+        user_id: comment.user_id,
+        post_id: comment.post_id
+      }
+      console.log("comment being used in fetch POST", new_comment)
+
+
+    return fetch(`http://localhost:3000/comments`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      },
+      body: JSON.stringify(new_comment)
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        console.log('did the comment work?', response)
+        return response
+      });
+  }
 }
 
 window.Api = Api

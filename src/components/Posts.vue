@@ -25,6 +25,7 @@
             <v-btn flat color="orange">Share with friends</v-btn>
             <v-btn flat color="yellow">Star</v-btn>
           </v-card-actions>
+          <CommentSection />
         </v-card>
       </v-flex>
     </v-layout>
@@ -33,13 +34,15 @@
 
 <script>
 import NewPost from "../components/NewPost.vue";
+import CommentSection from "../components/CommentSection.vue";
 import Api from "../api.js";
 import store from "@/store.js";
 
 export default {
   name: "Posts",
   components: {
-    NewPost
+    NewPost,
+    CommentSection
   },
   data() {
     return {
