@@ -19,7 +19,7 @@
             <li>profile page</li>
             <li>messages - unread / read state</li>
             <li>sent / received tabs</li>
-            <li>back end test suite</li>
+            <li>rspec back end test suite</li>
             <li>integrate active storage uploads from front end (somehow?) :\</li>
           </ul>
         </v-flex>
