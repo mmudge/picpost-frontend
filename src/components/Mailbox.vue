@@ -80,6 +80,8 @@
   </v-container>
 </template>
 
+
+
 <script>
 import NewMessage from "../components/NewMessage.vue";
 import Api from "../api.js";

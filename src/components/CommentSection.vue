@@ -12,12 +12,8 @@ import Api from "../api.js";
 
 export default {
   name: "CommentSection",
-  props: ["id"],
   data() {
-    return {
-      message: {},
-      sender: {}
-    };
+    return {};
   },
   methods: {
     createComment() {
