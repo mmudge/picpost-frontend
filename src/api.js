@@ -313,24 +313,20 @@ export default class Api {
 
   // COMMENTS
 
-  static createComment(comment) {
+  static createComment(postId, comment) {
     console.log("comment being passed to api", comment)
-    const new_comment =  {
-        remark: comment.remark,
-        user_id: comment.user_id,
-        post_id: comment.post_id
-      }
-      console.log("comment being used in fetch POST", new_comment)
+    // const new_comment =   { remark: comment.remark, user_id: comment.user_id }
+      console.log("comment being used in fetch POST", comment)
 
 
-    return fetch(`http://localhost:3000/comments`, {
+    return fetch(`http://localhost:3000/posts/${postId}/comments`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.token}`
       },
-      body: JSON.stringify(new_comment)
+      body: JSON.stringify({comment: comment} )
     })
       .then(response => {
         return response.json();

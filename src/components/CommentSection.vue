@@ -19,10 +19,9 @@ export default {
     createComment() {
       let comment = {
         remark: "hey super cool comment dude",
-        user_id: 17,
-        post_id: 1
+        user_id: 17
       };
-      Api.createComment(comment);
+      Api.createComment(1, comment);
     }
   },
   mounted() {}
