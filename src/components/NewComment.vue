@@ -1,10 +1,11 @@
 <template>
   <v-container>
-    <v-card>
-      <v-card-text>New Comment</v-card-text>
+    <v-layout>
       <v-text-field v-model="remark"></v-text-field>
-      <v-btn @click="createComment">make a comment</v-btn>
-    </v-card>
+      <v-btn icon @click="createComment">
+        <v-icon color="blue">chat_bubble_outline</v-icon>
+      </v-btn>
+    </v-layout>
   </v-container>
 </template>
 
@@ -16,7 +17,7 @@ export default {
   props: ["post"],
   data() {
     return {
-      remark: ""
+      remark: null
     };
   },
   methods: {
@@ -26,7 +27,8 @@ export default {
         user_id: 17
       };
       Api.createComment(this.post.id, comment).then(response => {
-        this.$emit("addComment", response);
+        this.$emit("addComment");
+        this.remark = null;
       });
     }
   },

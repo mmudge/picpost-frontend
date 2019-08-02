@@ -14,13 +14,13 @@
       <v-btn flat color="orange">Share with friends</v-btn>
       <v-btn flat color="yellow">Star</v-btn>
     </v-card-actions>
-    <NewComment @addComment="addComment" :post="post" />
+    <NewComment :post="post" @addComment="loadComments(post.id)" />
     <v-container v-if="comments">
-      <v-layout>
-        <v-flex v-for="comment in comments" :key="comment.remark">
-          <v-card>{{ comment.remark }}</v-card>
-        </v-flex>
-      </v-layout>
+      <v-list v-for="comment in comments" :key="comment.remark">
+        <v-list-tile>
+          <v-list-tile-content>{{ comment.remark }}</v-list-tile-content>
+        </v-list-tile>
+      </v-list>
     </v-container>
   </v-card>
 </template>
@@ -49,16 +49,19 @@ export default {
         this.users = response;
       });
     },
+    loadComments(postId) {
+      Api.getComments(postId).then(response => {
+        this.comments = response;
+      });
+    },
 
     findPostUser(id) {
       return this.users.filter(u => u.id === id)[0].username;
-    },
-    addComment(comment) {
-      this.comments.push(comment);
     }
   },
   mounted() {
     this.loadUsers();
+    this.loadComments(this.post.id);
   }
 };
 </script>

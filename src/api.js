@@ -336,6 +336,26 @@ export default class Api {
         return response
       });
   }
+
+
+  static getComments(postId) {
+    return fetch(`http://localhost:3000/posts/${postId}/comments`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        return response;
+      })
+      .catch(error => {
+        console.log("back end received messages broke", error);
+      });
+  }
 }
 
 window.Api = Api
