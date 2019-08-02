@@ -1,7 +1,8 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-text>comment section</v-card-text>
+      <v-card-text>New Comment</v-card-text>
+      <v-text-field v-model="remark"></v-text-field>
       <v-btn @click="createComment">make a comment</v-btn>
     </v-card>
   </v-container>
@@ -11,17 +12,22 @@
 import Api from "../api.js";
 
 export default {
-  name: "CommentSection",
+  name: "NewComment",
+  props: ["post"],
   data() {
-    return {};
+    return {
+      remark: ""
+    };
   },
   methods: {
     createComment() {
       let comment = {
-        remark: "hey super cool comment dude",
+        remark: this.remark,
         user_id: 17
       };
-      Api.createComment(1, comment);
+      Api.createComment(this.post.id, comment).then(response => {
+        this.$emit("addComment", response);
+      });
     }
   },
   mounted() {}
