@@ -27,6 +27,10 @@ export default {
         user_id: 17
       };
       Api.createComment(this.post.id, comment).then(response => {
+        this.$store.commit("setSnackbar", {
+          text: "Comment added!",
+          color: "success"
+        });
         this.$emit("addComment");
         this.remark = null;
       });

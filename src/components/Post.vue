@@ -1,6 +1,7 @@
 <template>
   <v-card class="ma-1">
     <v-img :src="image_src" aspect-ratio="1.2"></v-img>
+
     <v-card-title primary-title>
       <div>
         <h3 class="headline mb-0">{{ post.title }}</h3>
@@ -16,7 +17,10 @@
     <v-container v-if="post.comments">
       <v-list v-for="comment in post.comments" :key="comment.id">
         <v-list-tile>
-          <v-list-tile-content>{{ comment.remark }}</v-list-tile-content>
+          <v-list-tile-content>
+            {{ comment.remark }}
+            <!-- <strong>{{comment.user.username}}</strong>  NOT WORKING HOW I WANT YET-->
+          </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-container>
@@ -39,8 +43,18 @@ export default {
       image_src: require("../assets/card-bg.png")
     };
   },
-  methods: {},
-  mounted() {}
+  methods: {
+    loadComments(postId) {
+      let post_comments = [];
+      Api.getComments(postId).then(response => {
+        console.log("comments response", response);
+        this.post.comments = response;
+      });
+    }
+  },
+  mounted() {
+    this.loadComments(this.post.id);
+  }
 };
 </script>
 
