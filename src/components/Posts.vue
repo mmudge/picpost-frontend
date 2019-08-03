@@ -31,10 +31,7 @@ export default {
   data() {
     return {
       posts: [],
-      users: [],
-
       dialogNewPost: false,
-
       image_src: require("../assets/card-bg.png")
     };
   },
@@ -44,7 +41,6 @@ export default {
         this.posts = response;
       });
     },
-
     dialogToggle() {
       this.dialogNewPost = !this.dialogNewPost;
     }
