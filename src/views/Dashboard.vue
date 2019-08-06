@@ -17,6 +17,7 @@
             <li>like / dislike posts</li>
             <li>edit user info</li>
             <li>profile page</li>
+            <li>home page/ landing page design</li>
             <li>messages - unread / read state</li>
             <li>sent / received tabs</li>
             <li>rspec back end test suite</li>
