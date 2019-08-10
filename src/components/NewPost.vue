@@ -6,6 +6,8 @@
           <v-form ref="form" lazy-validation>
             <v-text-field v-model="title" label="Post Title" required></v-text-field>
             <!-- need to add image uploader -->
+            <p>Picture :</p>
+            <input type="file" ref="inputFile" @change="uploadFile()" />
 
             <v-btn color="success" @click="createPost">Create post</v-btn>
 
@@ -26,14 +28,19 @@ export default {
   data() {
     return {
       title: "",
-      user_id: null
+      user_id: null,
+      inputPicture: null
     };
   },
   methods: {
+    uploadFile() {
+      this.inputPicture = this.$refs.inputFile.files[0];
+    },
     createPost() {
       const newPost = {
         title: this.title,
-        user_id: store.state.user.id
+        user_id: store.state.user.id,
+        photo: this.inputPicture
       };
       Api.createPost(newPost).then(() => {
         this.$emit("getPosts");

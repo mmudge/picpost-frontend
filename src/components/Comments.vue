@@ -60,7 +60,6 @@ export default {
   methods: {
     prettyDateTime(date) {
       let firstSplit = date.split("T");
-      console.log("first split", firstSplit);
       let month = firstSplit[0].split("-")[1];
       let day = firstSplit[0].split("-")[2];
       let hour = firstSplit[1].split(":")[0];

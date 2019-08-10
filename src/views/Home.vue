@@ -5,7 +5,7 @@
     </div>
     <div v-else>
       <h1>Welcome, please log in</h1>
-      <v-btn to="/login" outline text color="green">Log in</v-btn>
+      <v-btn to="/login" outlined text color="green">Log in</v-btn>
     </div>
   </div>
 </template>
