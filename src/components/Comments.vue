@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-container v-if="comments">
-      <!-- <v-btn color="blue" flat @click="showAllComments = !showAllComments">Show all comments</v-btn> -->
+      <!-- <v-btn color="blue" text @click="showAllComments = !showAllComments">Show all comments</v-btn> -->
 
       <v-list two-line subheader>
         <v-subheader>
-          <v-btn color="blue" outlined flat @click="showAllComments = !showAllComments">
+          <v-btn color="blue" outlined text @click="showAllComments = !showAllComments">
             Comments
             <v-icon>arrow_drop_down</v-icon>
           </v-btn>

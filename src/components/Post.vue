@@ -10,8 +10,8 @@
     </v-card-title>
 
     <!-- <v-card-actions>
-      <v-btn flat color="orange">Share with friends</v-btn>
-      <v-btn flat color="yellow">Star</v-btn>
+      <v-btn text color="orange">Share with friends</v-btn>
+      <v-btn text color="yellow">Star</v-btn>
     </v-card-actions>-->
     <NewComment :post="post" @addComment="loadComments(post.id)" />
     <Comments :comments="post.comments" />

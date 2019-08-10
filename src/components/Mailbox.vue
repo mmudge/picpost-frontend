@@ -3,10 +3,18 @@
     <v-toolbar color="primary" dark>
       <v-toolbar-title>Mailbox</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn color="white" dark outlined depressed @click="received = true">
+        Received
+        <v-icon>mail</v-icon>
+      </v-btn>
+      <v-btn color="white" dark outlined @click="received = false">
+        Sent
+        <v-icon>mail</v-icon>
+      </v-btn>
 
       <v-dialog v-model="dialogNewMessage" width="500" pa-5>
         <template v-slot:activator="{ on }">
-          <v-btn color="success" dark v-on="on">
+          <v-btn color="white" dark outlined v-on="on">
             Send a message
             <v-icon>mail</v-icon>
           </v-btn>
@@ -16,66 +24,57 @@
         </v-card>
       </v-dialog>
     </v-toolbar>
-    <h2>Received Messages</h2>
-    <v-list three-line v-for="message in receivedMessages" :key="message.id">
-      <v-list-tile>
-        <v-list-tile-content
-          style="cursor: pointer;"
-          @click="$router.push({name: 'message', params: { id: message.id }})"
-        >
-          <v-list-tile-title>
-            <strong>Subject: {{ message.subject }}</strong>
-          </v-list-tile-title>
-          <v-list-tile-sub-title class="text--primary">
-            Created at:{{
-            message.created_at
-            }}
-          </v-list-tile-sub-title>
 
-          <v-list-tile-sub-title>
-            {{
-            message.body
-            }}
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
+    <v-list two-line subheader v-if="received">
+      <v-subheader inset>Inbox</v-subheader>
 
-        <v-spacer></v-spacer>
+      <v-list-item
+        v-for="message in receivedMessages"
+        :key="message.id"
+        @click="$router.push({name: 'message', params: { id: message.id }})"
+        style="cursor: pointer;"
+      >
+        <v-list-item-avatar>
+          <v-icon>person</v-icon>
+        </v-list-item-avatar>
 
-        <v-btn icon @click="deleteMessage(message.id)">
-          <v-icon>delete</v-icon>
-        </v-btn>
-      </v-list-tile>
+        <v-list-item-content>
+          <v-list-item-title v-text="message.subject"></v-list-item-title>
+          <v-list-item-subtitle v-text="message.created_at"></v-list-item-subtitle>
+        </v-list-item-content>
+
+        <v-list-item-action>
+          <v-btn icon @click="deleteMessage(message.id)">
+            <v-icon>delete</v-icon>
+          </v-btn>
+        </v-list-item-action>
+      </v-list-item>
     </v-list>
 
-    <h2>Sent Messages</h2>
-    <v-list three-line v-for="message in sentMessages" :key="message.id">
-      <v-list-tile>
-        <v-list-tile-content
-          style="cursor: pointer;"
-          @click="$router.push({name: 'message', params: { id: message.id }})"
-        >
-          <v-list-tile-title>
-            <strong>Subject: {{ message.subject }}</strong>
-          </v-list-tile-title>
-          <v-list-tile-sub-title class="text--primary">
-            Created at:{{
-            message.created_at
-            }}
-          </v-list-tile-sub-title>
+    <v-list two-line subheader v-else>
+      <v-subheader inset>Sent</v-subheader>
 
-          <v-list-tile-sub-title>
-            {{
-            message.body
-            }}
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
+      <v-list-item
+        v-for="message in sentMessages"
+        :key="message.id"
+        @click="$router.push({name: 'message', params: { id: message.id }})"
+        style="cursor: pointer;"
+      >
+        <v-list-item-avatar>
+          <v-icon>person</v-icon>
+        </v-list-item-avatar>
 
-        <v-spacer></v-spacer>
+        <v-list-item-content>
+          <v-list-item-title v-text="message.subject"></v-list-item-title>
+          <v-list-item-subtitle v-text="message.created_at"></v-list-item-subtitle>
+        </v-list-item-content>
 
-        <v-btn icon @click="deleteMessage(message.id)">
-          <v-icon>delete</v-icon>
-        </v-btn>
-      </v-list-tile>
+        <v-list-item-action>
+          <v-btn icon @click="deleteMessage(message.id)">
+            <v-icon>delete</v-icon>
+          </v-btn>
+        </v-list-item-action>
+      </v-list-item>
     </v-list>
   </v-container>
 </template>
@@ -97,7 +96,8 @@ export default {
       sentMessages: [],
       users: [],
       dialogNewMessage: false,
-      dialogMessageShow: false
+      dialogMessageShow: false,
+      received: true
     };
   },
   methods: {
@@ -114,12 +114,12 @@ export default {
       });
     },
     getReceivedMessages() {
-      Api.getReceivedMessages().then(response => {
+      return Api.getReceivedMessages().then(response => {
         this.receivedMessages = response;
       });
     },
     getSentMessages() {
-      Api.getSentMessages().then(response => {
+      return Api.getSentMessages().then(response => {
         this.sentMessages = response;
       });
     },

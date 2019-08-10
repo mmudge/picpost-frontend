@@ -30,7 +30,7 @@
 <!-- <template>
   <v-card>
     <v-toolbar
-      flat
+      text
       color="pink"
       dark
     >
