@@ -19,7 +19,7 @@
     <v-toolbar app color="primary" dark>
       <v-toolbar-side-icon class="hidden-md-and-up" @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-spacer class="hidden-md-and-up"></v-spacer>
-      <v-btn flat dark to="/">
+      <v-btn depressed class="blue darken-2" flat dark to="/">
         <v-toolbar-title>
           {{ appName }}
           <v-icon>chat_bubble_outline</v-icon>
@@ -28,16 +28,22 @@
 
       <v-spacer class="hidden-sm-and-down"></v-spacer>
       <v-toolbar-items v-if="!isAuthenticated" class="hidden-sm-and-down">
-        <v-btn flat to="/posts">Posts</v-btn>
-        <v-btn to="/login" flat>Login</v-btn>
-        <v-btn to="/join" flat>Sign Up</v-btn>
+        <v-btn class="blue darken-2" flat to="/posts">Posts</v-btn>
+        <v-btn class="blue darken-2" to="/login" flat>Login</v-btn>
+        <v-btn class="blue darken-2" to="/join" flat>Sign Up</v-btn>
       </v-toolbar-items>
       <v-toolbar-items v-else class="hidden-sm-and-down">
-        <v-btn flat to="/posts">Posts</v-btn>
-        <v-btn flat to="/dashboard">Dashboard</v-btn>
-        <v-btn flat to="/messages">Messages</v-btn>
-        <v-btn v-if="userName" flat @click="logout">Logout ({{ userName }})</v-btn>
-        <v-btn v-else flat @click="logout">Logout</v-btn>
+        <v-btn class="blue darken-2" depressed flat to="/posts">Posts</v-btn>
+        <v-btn class="blue darken-2" depressed flat to="/dashboard">Dashboard</v-btn>
+        <v-btn class="blue darken-2" depressed flat to="/messages">Messages</v-btn>
+        <v-btn
+          class="blue darken-2"
+          depressed
+          v-if="userName"
+          flat
+          @click="logout"
+        >Logout ({{ userName }})</v-btn>
+        <v-btn class="blue darken-2" depressed v-else flat @click="logout">Logout</v-btn>
       </v-toolbar-items>
     </v-toolbar>
   </div>
