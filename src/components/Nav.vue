@@ -2,22 +2,24 @@
   <div>
     <v-navigation-drawer app v-model="drawer" class="blue darken-2" dark disable-resize-watcher>
       <v-list>
-        <v-list-tile v-for="item in sideBar" :key="item.index" :to="item.link">
-          <v-list-tile-content>{{ item.title }}</v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile to="/login" v-if="!isAuthenticated">
-          <v-list-tile-content>Login</v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile to="/join" v-if="!isAuthenticated">
-          <v-list-tile-content>Join</v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile @click="logout()" v-if="isAuthenticated">
-          <v-list-tile-content>Sign out</v-list-tile-content>
-        </v-list-tile>
+        <v-list-item v-for="item in sideBar" :key="item.index" :to="item.link">
+          <v-list-item-content>{{ item.title }}</v-list-item-content>
+        </v-list-item>
+        <v-list-item to="/login" v-if="!isAuthenticated">
+          <v-list-item-content>Login</v-list-item-content>
+        </v-list-item>
+        <v-list-item to="/join" v-if="!isAuthenticated">
+          <v-list-item-content>Join</v-list-item-content>
+        </v-list-item>
+        <v-list-item @click="logout()" v-if="isAuthenticated">
+          <v-list-item-content>Sign out</v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app color="primary" dark>
-      <v-toolbar-side-icon class="hidden-md-and-up" @click="drawer = !drawer"></v-toolbar-side-icon>
+    <v-app-bar app color="primary" dark>
+      <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = !drawer">
+        <v-icon>list</v-icon>
+      </v-app-bar-nav-icon>
       <v-spacer class="hidden-md-and-up"></v-spacer>
       <v-btn depressed class="blue darken-2" text dark to="/">
         <v-toolbar-title>
@@ -45,7 +47,7 @@
         >Logout ({{ userName }})</v-btn>
         <v-btn class="blue darken-2" depressed v-else text @click="logout">Logout</v-btn>
       </v-toolbar-items>
-    </v-toolbar>
+    </v-app-bar>
   </div>
 </template>
 
