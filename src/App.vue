@@ -16,9 +16,6 @@ export default {
   components: {
     Nav,
     Snackbar
-  },
-  data() {
-    return {};
   }
 };
 </script>

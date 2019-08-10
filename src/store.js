@@ -1,7 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import router from "@/router";
-import Api from "./api";
 
 Vue.use(Vuex);
 
@@ -18,10 +16,7 @@ export default new Vuex.Store({
     },
     setSnackbar(state, payload) {
       state.snackbar = payload;
-    },
-  },
-  actions: {
-
+    }
   },
   getters: {
     currentUser(state) {
