@@ -9,10 +9,19 @@
       </v-card>
     </v-dialog>
     <v-layout row wrap justify-center>
-      <v-flex xs12 sm3 v-for="post in posts" :key="post.id">
+      <v-flex
+        xs12
+        sm4
+        v-for="post in posts"
+        :key="post.id"
+        @click="fullPostDialog = true; postDetails = post"
+      >
         <Post :post="post" />
       </v-flex>
     </v-layout>
+    <v-dialog v-model="fullPostDialog" width="1000">
+      <Post :post="postDetails" :fullPost="true" />
+    </v-dialog>
   </v-container>
 </template>
 
@@ -32,6 +41,8 @@ export default {
     return {
       posts: [],
       dialogNewPost: false,
+      fullPostDialog: false,
+      postDetails: null,
       image_src: require("../assets/card-bg.png")
     };
   },

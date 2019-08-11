@@ -156,6 +156,25 @@ export default class Api {
 
   // POSTS
 
+
+  static getPost(id) {
+    return fetch(`http://localhost:3000/posts/${id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json"
+      }
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        return res
+      })
+      .catch(err => {
+        console.log("get posts backend broke", err);
+      });
+  }
+
   static getPosts() {
     return fetch(`http://localhost:3000/posts`, {
       method: "GET",
@@ -184,6 +203,50 @@ export default class Api {
 
     return fetch(`http://localhost:3000/posts`, {
       method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      },
+      body: JSON.stringify(post)
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        return response
+      });
+  }
+
+  static updatePost(updatedPost) {
+    let post = {}
+    if (updatedPost.title) {
+      post = {
+        post: {
+          title: updatedPost.title,
+          user_id: updatedPost.user_id
+        }
+      }
+    } else if (updatedPost.like) {
+      post = {
+        post: {
+          like: 1
+        }
+      }
+    } else if (updatedPost.dislike) {
+      post = {
+        post: {
+          dislike: 1
+        }
+      }
+    } else {
+      post = {}
+      console.log('nothing passed to update')
+    }
+
+
+    return fetch(`http://localhost:3000/posts/${updatedPost.id}`, {
+      method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
