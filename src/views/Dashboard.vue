@@ -13,8 +13,7 @@
           <v-btn color="warning" dark to="/posts">Posts</v-btn>
           <h2>Things I want to add (TODOs):</h2>
           <ul>
-            <li>comment on posts</li>
-            <li>like / dislike posts</li>
+            <li>dislike posts</li>
             <li>edit user info</li>
             <li>profile page</li>
             <li>home page/ landing page design</li>
