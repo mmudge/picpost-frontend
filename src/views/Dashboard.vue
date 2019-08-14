@@ -17,8 +17,6 @@
             <li>edit user info</li>
             <li>profile page</li>
             <li>home page/ landing page design</li>
-
-            <li>sent / received tabs</li>
             <li>rspec back end test suite</li>
             <li>integrate active storage uploads from front end (somehow?) :\</li>
             <li>refactor some components and views because right now they dont make sense, postsIndex and posts, messages and inbox</li>
