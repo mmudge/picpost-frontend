@@ -16,6 +16,7 @@
             <li>dislike posts</li>
             <li>edit user info</li>
             <li>profile page</li>
+            <li>full crud for posts and messages</li>
             <li>home page/ landing page design</li>
             <li>rspec back end test suite</li>
             <li>integrate active storage uploads from front end (somehow?) :\</li>
