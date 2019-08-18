@@ -9,7 +9,7 @@
 import Posts from "../components/Posts.vue";
 
 export default {
-  name: "Messages",
+  name: "Posts",
   components: {
     Posts
   }

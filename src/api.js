@@ -2,8 +2,6 @@ import store from "@/store.js";
 
 export default class Api {
   // USERS
-  // JOIN, SIGN IN, SIGN OUT
-
 
   static userJoin(email, username, password, password_confirmation) {
     return fetch("http://localhost:3000/signup", {
