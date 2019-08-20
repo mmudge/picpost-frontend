@@ -14,6 +14,7 @@
           <h2>Things I want to add (TODOs):</h2>
           <ul>
             <li>dislike posts</li>
+            <li>messages side nav bar</li>
             <li>edit user info</li>
             <li>profile page</li>
             <li>full crud for posts and messages</li>
