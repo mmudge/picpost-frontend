@@ -13,6 +13,7 @@
           <v-btn color="warning" dark to="/posts">Posts</v-btn>
           <h2>Things I want to add (TODOs):</h2>
           <ul>
+            <li>high priority- deployment</li>
             <li>dislike posts</li>
             <li>messages side nav bar</li>
             <li>edit user info</li>
