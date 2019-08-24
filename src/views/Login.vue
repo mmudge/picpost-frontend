@@ -52,8 +52,21 @@ export default {
   methods: {
     login() {
       if (this.$refs.form.validate()) {
-        Api.userLogin(this.email, this.password).then(() => {
-          this.$router.push("/dashboard");
+        Api.userLogin(this.email, this.password).then(result => {
+          console.log("results from user login", result);
+          if (result.error) {
+            this.$store.commit("setSnackbar", {
+              text: "Invalid username / password",
+              color: "error"
+            });
+          } else {
+            this.$store.commit("setSnackbar", {
+              text: `Logged in ${this.email}`,
+              color: "success"
+            });
+            this.$router.push("/dashboard");
+          }
+          // this.$router.push("/dashboard");
         });
       }
     }

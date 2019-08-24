@@ -51,6 +51,7 @@ export default class Api {
         return response.json();
       })
       .then(response => {
+        console.log('response before looking for token', response)
         if (response.token) {
           const token = response.token
           localStorage.setItem('token', token);
@@ -58,9 +59,8 @@ export default class Api {
 
           console.log("user logged in (with token) as", response.email);
           // router.push("/dashboard");
-        } else {
-          console.log("no token in response, devise session jwt is broke")
         }
+        return response
       })
       .catch(() => {
         console.log('user log in backend broke')
@@ -79,10 +79,11 @@ export default class Api {
         Authorization: "JWT"
       },
       body: JSON.stringify(store.state.user)
-    }).then(() => {
+    }).then((result) => {
       store.commit("setUser", null);
       localStorage.token = null;
       console.log('logged out')
+      return result
     });
   }
 
@@ -99,15 +100,16 @@ export default class Api {
         return response.json();
       })
       .then(response => {
-        if (response.error) {
+        if (response.errors) {
           store.commit('setUser', null)
           localStorage.token = null
+          return response.errors
         } else {
           store.commit("setUser", response);
-
+          console.log('User logged in as ', response.email)
+          return response
         }
-        console.log('User logged in as ', response.email)
-        return response;
+
       })
       .catch((e)  => {
         console.log("back end broke", e)

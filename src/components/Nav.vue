@@ -79,8 +79,19 @@ export default {
   methods: {
     logout() {
       // this.$store.dispatch("userSignOut");
-      Api.userSignOut().then(() => {
-        this.$router.push("/");
+      Api.userSignOut().then(result => {
+        if (result.error) {
+          this.$store.commit("setSnackbar", {
+            text: "Log out failed",
+            color: "error"
+          });
+        } else {
+          this.$store.commit("setSnackbar", {
+            text: `Logged out`,
+            color: "success"
+          });
+          this.$router.push("/");
+        }
       });
     },
     checkLogout(title) {
