@@ -14,6 +14,7 @@
           <h2>Things I want to add (TODOs):</h2>
           <ul>
             <li>high priority- deployment</li>
+            <li>maybe with axios config</li>
             <li>dislike posts</li>
             <li>messages side nav bar</li>
             <li>edit user info</li>
