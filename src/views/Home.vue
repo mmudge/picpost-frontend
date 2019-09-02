@@ -2,6 +2,7 @@
   <div id="homepage" class="flex-center">
     <div v-if="userLoggedIn">
       <h1>Welcome to the homepage, {{ userLoggedIn.email }}</h1>
+      <v-btn to="/dashboard" outlined text color="blue">Dashboard</v-btn>
     </div>
     <div v-else>
       <h1>Welcome, please log in</h1>

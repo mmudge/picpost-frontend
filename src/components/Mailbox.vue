@@ -19,9 +19,8 @@
             <v-icon>mail</v-icon>
           </v-btn>
         </template>
-        <v-card>
-          <NewMessage v-on:dialogToggle="dialogToggle" />
-        </v-card>
+
+        <NewMessage v-on:dialogToggle="dialogToggle" />
       </v-dialog>
     </v-toolbar>
 

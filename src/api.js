@@ -1,6 +1,29 @@
 import store from "@/store.js";
 
 export default class Api {
+
+  static directUpload(attachment) {
+    return fetch("http://localhost:3000//rails/active_storage/direct_uploads", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      },
+      body: JSON.stringify({ photo: attachment })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        console.log('photo upload got a response', response)
+        return response
+      })
+      .catch(() => {
+        console.log('photo upload backend broke')
+      });
+  }
   // USERS
 
   static userJoin(email, username, password, password_confirmation) {
@@ -260,6 +283,17 @@ export default class Api {
       .then(response => {
         return response
       });
+  }
+
+  static deletePost(postId) {
+    return fetch(`http://localhost:3000/posts/${postId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      }
+    })
   }
 
   // MESSAGES

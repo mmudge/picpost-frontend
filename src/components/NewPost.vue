@@ -1,23 +1,25 @@
 <template>
   <div>
-    <v-container>
-      <v-layout>
-        <v-flex>
-          <v-form ref="form" lazy-validation>
-            <v-text-field v-model="title" label="Post Title" required></v-text-field>
-            <!-- need to add image uploader -->
-            <p>Picture :</p>
-            <!-- <input type="file" ref="inputFile" @change="uploadFile()" /> -->
-            <v-file-input v-model="photo"></v-file-input>
-            <v-btn color="info" @click="uploadPhoto">upload</v-btn>
+    <v-card>
+      <v-container>
+        <v-layout>
+          <v-flex>
+            <v-form ref="form" lazy-validation>
+              <v-text-field v-model="title" label="Post Title" required></v-text-field>
+              <!-- need to add image uploader -->
+              <p>Picture :</p>
+              <!-- <input type="file" ref="inputFile" @change="uploadFile()" /> -->
+              <v-file-input v-model="photo"></v-file-input>
+              <v-btn color="info" @click="uploadPhoto">upload</v-btn>
 
-            <v-btn color="success" @click="createPost">Create post</v-btn>
+              <v-btn color="success" @click="createPost">Create post</v-btn>
 
-            <v-btn color="error" @click="reset">Reset Form</v-btn>
-          </v-form>
-        </v-flex>
-      </v-layout>
-    </v-container>
+              <v-btn color="error" @click="reset">Reset Form</v-btn>
+            </v-form>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-card>
   </div>
 </template>
 

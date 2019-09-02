@@ -4,9 +4,8 @@
       <template v-slot:activator="{ on }">
         <v-btn color="success" dark v-on="on">New Post</v-btn>
       </template>
-      <v-card>
-        <NewPost v-on:getPosts="getPosts" v-on:dialogToggle="dialogToggle" />
-      </v-card>
+
+      <NewPost v-on:getPosts="getPosts" v-on:dialogToggle="dialogToggle" />
     </v-dialog>
     <v-layout row wrap justify-center>
       <v-flex
@@ -16,11 +15,11 @@
         :key="post.id"
         @click="fullPostDialog = true; postDetails = post"
       >
-        <Post :post="post" />
+        <Post :post="post" v-on:getPosts="getPosts()" />
       </v-flex>
     </v-layout>
     <v-dialog v-model="fullPostDialog" width="1000">
-      <Post :post="postDetails" :fullPost="true" />
+      <Post :post="postDetails" :fullPost="true" v-on:getPosts="getPosts()" />
     </v-dialog>
   </v-container>
 </template>

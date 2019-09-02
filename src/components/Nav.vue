@@ -35,8 +35,8 @@
         <v-btn class="blue darken-2" to="/join" text>Sign Up</v-btn>
       </v-toolbar-items>
       <v-toolbar-items v-else class="hidden-sm-and-down">
-        <v-btn class="blue darken-2" depressed text to="/posts">Posts</v-btn>
         <v-btn class="blue darken-2" depressed text to="/dashboard">Dashboard</v-btn>
+        <v-btn class="blue darken-2" depressed text to="/posts">Posts</v-btn>
         <v-btn class="blue darken-2" depressed text to="/messages">Messages</v-btn>
         <v-btn
           class="blue darken-2"

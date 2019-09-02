@@ -4,18 +4,24 @@
 
     <v-card-title primary-title>
       <div>
-        <h3 class="headline mb-0">{{ post.title }}</h3>
+        <h3 v-if="post.title" class="headline mb-0">{{ post.title }}</h3>
+        <h3 v-else class="headline mb-0">no title</h3>
       </div>
     </v-card-title>
 
     <v-card-actions>
-      <v-btn @click="likePost()" text color="blue">
+      <v-btn @click.stop="likePost()" text color="blue">
         <v-icon>thumb_up</v-icon>
-        <template v-if="post.like">({{post.like }})</template>
+        <template v-if="post.like">({{ post.like }})</template>
         <template v-else>(0)</template>
       </v-btn>
-      <v-btn text color="red">
+      <v-btn @click.stop="dislikePost()" text color="red">
         <v-icon>thumb_down</v-icon>
+        <template v-if="post.dislike">({{ post.dislike }})</template>
+        <template v-else>(0)</template>
+      </v-btn>
+      <v-btn v-if="checkUser()" text color="red" @click.stop="deletePost()">
+        <v-icon>delete</v-icon>
       </v-btn>
       <!-- <v-btn text color="yellow">Star</v-btn> -->
     </v-card-actions>
@@ -59,6 +65,39 @@ export default {
           this.post.like = response.like;
         });
       });
+    },
+    dislikePost() {
+      let updatedPost = { id: this.post.id, dislike: 1 };
+      Api.updatePost(updatedPost).then(() => {
+        Api.getPost(this.post.id).then(response => {
+          this.post.dislike = response.dislike;
+        });
+      });
+    },
+    checkUser() {
+      if (this.post.user.id === this.$store.state.user.id) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    deletePost() {
+      if (this.checkUser()) {
+        Api.deletePost(this.post.id).then(response => {
+          if (response.error) {
+            store.commit("setSnackbar", {
+              text: "Deleting post failed!",
+              color: "error"
+            });
+          } else {
+            store.commit("setSnackbar", {
+              text: "Post deleted!",
+              color: "success"
+            });
+            this.$emit("getPosts");
+          }
+        });
+      }
     }
   },
   computed: {
@@ -67,7 +106,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.post);
     this.loadComments(this.post.id);
   }
 };
