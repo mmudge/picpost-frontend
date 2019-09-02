@@ -7,7 +7,9 @@
             <v-text-field v-model="title" label="Post Title" required></v-text-field>
             <!-- need to add image uploader -->
             <p>Picture :</p>
-            <input type="file" ref="inputFile" @change="uploadFile()" />
+            <!-- <input type="file" ref="inputFile" @change="uploadFile()" /> -->
+            <v-file-input v-model="photo"></v-file-input>
+            <v-btn color="info" @click="uploadPhoto">upload</v-btn>
 
             <v-btn color="success" @click="createPost">Create post</v-btn>
 
@@ -29,28 +31,47 @@ export default {
     return {
       title: "",
       user_id: null,
-      inputPicture: null
+      inputPicture: null,
+      photo: null
     };
   },
   methods: {
-    uploadFile() {
-      this.inputPicture = this.$refs.inputFile.files[0];
-    },
+    // uploadFile() {
+    //   this.inputPicture = this.$refs.inputFile.files[0];
+    // },
     createPost() {
       const newPost = {
         title: this.title,
-        user_id: store.state.user.id,
-        photo: this.inputPicture
+        user_id: store.state.user.id
+        // photo: this.inputPicture
+        // photo: this.photo
       };
-      Api.createPost(newPost).then(() => {
-        this.$emit("getPosts");
-        store.commit("setSnackbar", {
-          text: "Post created!",
-          color: "success"
-        });
+      Api.createPost(newPost).then(result => {
+        if (result.error) {
+          store.commit("setSnackbar", {
+            text: "Post failed!",
+            color: "error"
+          });
+        } else {
+          this.$emit("getPosts");
+          store.commit("setSnackbar", {
+            text: "Post created!",
+            color: "success"
+          });
+
+          this.$emit("dialogToggle");
+          this.reset();
+        }
       });
-      this.$emit("dialogToggle");
-      this.reset();
+    },
+    uploadPhoto() {
+      Api.directUpload(this.photo).then(result => {
+        if (result.error) {
+          console.log("got error in photo upload", result.error);
+        } else {
+          console.log("i think photo upload worked", result);
+        }
+      });
     },
     reset() {
       this.title = "";
